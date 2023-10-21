@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const NickName = () => {
   const [nickName, setNickName] = useState('');
+  const navigate = useNavigate();
 
   const handleNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNickName(event.target.value);
   };
 
-  const handleComplete = async () => {};
+  const handleComplete = () => {
+    navigate('/write-question');
+  };
   return (
     <StyledQuestionContainer>
       <UserIcon>
