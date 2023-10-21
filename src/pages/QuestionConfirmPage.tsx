@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Modal from '../components/Modal/Modal';
 import SkeletonUi from '../components/Skeleton/SkeletonUi';
+import useClipboard from '../hooks/useClipboard';
 import { getCreatedYMD } from '../utils/getCreatedYMD';
 // import { useParams } from 'react-router-dom';
 
@@ -33,6 +34,7 @@ const QuestionConfirmPage = () => {
   const [myAnsersResponse, setMyAnswersResponse] = useState<ResponseData>();
   const router = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const { handleShareCodeCopy } = useClipboard();
 
   useEffect(() => {
     fetchMyAnswers()
@@ -101,8 +103,12 @@ const QuestionConfirmPage = () => {
         <button className="question__addButton" onClick={() => router('/question')}>
           질문 추가하기
         </button>
-        {/* TODO: 라이 공유로직이랑 연동하기 */}
-        <button className="question__shareButton">질문 공유하기</button>
+        <button
+          onClick={() => handleShareCodeCopy('7716N2EK')}
+          className="question__shareButton"
+        >
+          질문 공유하기
+        </button>
       </div>
 
       {isOpen && clickedAnswer && (
