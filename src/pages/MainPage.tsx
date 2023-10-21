@@ -1,4 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+
+interface SliderUlProps {
+  current: number;
+}
 
 const MainPage = () => {
   const ReCloudVariableImgUrl = new URL(
@@ -14,9 +19,15 @@ const MainPage = () => {
     import.meta.url,
   ).href;
 
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+
+  const handleButtonClick = (newSlide: number) => {
+    setCurrentSlide(newSlide);
+  };
+
   return (
     <StyeldContainer className="onboarding">
-      <SliderUl>
+      <SliderUl current={currentSlide}>
         <SliderLi>
           <img src={ReCloudVariableImgUrl} alt="질문 보내기에 대한 설명 아이콘입니다" />
           <SliderTitle>질문 보내기에 대한 설명</SliderTitle>
@@ -37,13 +48,13 @@ const MainPage = () => {
         </SliderLi>
       </SliderUl>
       <NavBox>
-        <NavButton>
+        <NavButton onClick={() => handleButtonClick(0)}>
           <NavSpan>질문 보내기 설명 슬라이드</NavSpan>
         </NavButton>
-        <NavButton>
+        <NavButton onClick={() => handleButtonClick(1)}>
           <NavSpan>링크 전달 답변받기 슬라이드</NavSpan>
         </NavButton>
-        <NavButton>
+        <NavButton onClick={() => handleButtonClick(2)}>
           <NavSpan>받은 답변으로 생각 기록 설명 슬라이드</NavSpan>
         </NavButton>
       </NavBox>
@@ -69,11 +80,15 @@ const StyeldContainer = styled.section`
   overflow: hidden;
   font-family: 'Pretendard', sans-serif;
 `;
-const SliderUl = styled.ul`
+const SliderUl = styled.ul<SliderUlProps>`
   display: flex;
   padding: 0px;
   margin: 0px;
   list-style-type: none;
+  transition: transform 0.5s;
+  ${(props) => `
+    transform: translateX(-${props.current * 375}px);
+  `}
 `;
 
 const SliderLi = styled.li`
