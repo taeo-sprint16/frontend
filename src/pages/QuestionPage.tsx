@@ -1,7 +1,11 @@
-import React from 'react';
+import NickName from '../components/NickName';
 
 const QuestionPage = () => {
-  return <div>QuestionPage</div>;
+  return (
+    <>
+      <NickName />
+    </>
+  );
 };
 
 export default QuestionPage;
