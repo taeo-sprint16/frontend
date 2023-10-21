@@ -1,6 +1,26 @@
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
 const WriteQuestion = () => {
+  const [question, setQuestion] = useState('');
+  const ref = useRef<HTMLTextAreaElement | null>(null);
+  const handleQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setQuestion(event.target.value);
+    adjustTextareaHeight();
+  };
+
+  const adjustTextareaHeight = () => {
+    const textarea = ref.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, []);
+
   return (
     <StyledQuestionContainer>
       <WriteIcon>
@@ -71,7 +91,12 @@ const WriteQuestion = () => {
           <Button>첫인상</Button>
           <Button>성격</Button>
         </ButtonContainer>
-        <PlaceHolder type="text" placeholder="질문을 입력하세요." />
+        <PlaceHolder
+          ref={ref}
+          placeholder="질문을 입력하세요."
+          value={question}
+          onChange={handleQuestion}
+        />
       </Wrapper>
       <CompleteButton>질문 작성 완료</CompleteButton>
     </StyledQuestionContainer>
@@ -131,9 +156,13 @@ const Button = styled.button`
   border-radius: 16px;
   background: #f4f5f9;
   cursor: pointer;
+  &:focus {
+    background: #7aa3e9;
+    color: #f4f5f9;
+  }
 `;
 
-const PlaceHolder = styled.input`
+const PlaceHolder = styled.textarea`
   text-align: center;
   font:
     normal 500 16px / normal 'Pretendard',
@@ -143,6 +172,12 @@ const PlaceHolder = styled.input`
   &::placeholder {
     padding-right: 15px;
   }
+  resize: none;
+  width: 100%;
+  min-height: 100px;
+  overflow: hidden;
+  outline: none;
+  border: 1px solid #58a3b3;
 `;
 
 const CompleteButton = styled.button`
