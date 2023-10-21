@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface SliderUlProps {
@@ -59,12 +60,12 @@ const MainPage = () => {
         </NavButton>
       </NavBox>
       <ButtonContainer>
-        <Button>
-          <ButtonText>잘문 작성하기</ButtonText>
-        </Button>
-        <Button>
+        <RouteLink to="/question">
+          <ButtonText>질문 작성하기</ButtonText>
+        </RouteLink>
+        <RouteLink to="/confirm">
           <ButtonText>답변 확인하기</ButtonText>
-        </Button>
+        </RouteLink>
       </ButtonContainer>
     </StyeldContainer>
   );
@@ -149,7 +150,7 @@ const ButtonContainer = styled.div`
   margin-top: 32px;
   gap: 8px;
 `;
-const Button = styled.button`
+const RouteLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,6 +166,7 @@ const Button = styled.button`
     background-color: #86aff4;
     outline: none;
   }
+  text-decoration: none;
 `;
 
 const ButtonText = styled.p`
