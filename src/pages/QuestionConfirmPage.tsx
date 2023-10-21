@@ -50,7 +50,6 @@ const QuestionConfirmPage = () => {
     return data;
   };
 
-  //modal
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [clickedAnswer, setClickedAnswer] = useState<Answer | null>();
 
