@@ -52,7 +52,7 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
       />
       <div className="main__buttonWrapper">
         <button className="main__submitbutton" onClick={postAnswerHandler}>
-          답변 제출하기
+          답변 작성 완료
         </button>
       </div>
     </StyledAnswerPageMainContainer>
@@ -67,7 +67,7 @@ const StyledAnswerPageMainContainer = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 60px;
+  padding: 80px;
 
   .main__pencilicon {
     width: 32px;
