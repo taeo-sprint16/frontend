@@ -56,4 +56,35 @@ const ModalContent = styled.div`
   gap: 32px;
   border-radius: 24px;
   background-color: rgba(255, 255, 255, 1);
+
+  .modal__wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 12px 8px;
+    position: relative;
+
+    .modal__createdAt {
+      color: rgba(147, 147, 148, 1);
+      font-size: 14px;
+    }
+
+    .modal__answer {
+      font-size: 16px;
+      line-height: 24px;
+      color: rgba(15, 18, 46, 1);
+    }
+
+    .ToAnsersButton {
+      width: 275px;
+      height: 48px;
+      border-radius: 24px;
+      padding: 8px 16px;
+      gap: 8px;
+      background-color: rgba(131, 163, 216, 1);
+      color: rgba(255, 255, 255, 1);
+      border: none;
+      position: absolute;
+      bottom: 4px;
+    }
+  }
 `;

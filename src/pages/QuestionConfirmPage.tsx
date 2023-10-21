@@ -103,11 +103,11 @@ const QuestionConfirmPage = () => {
 
       {isOpen && clickedAnswer && (
         <Modal onClose={() => setIsOpen(false)}>
-          <div>
+          <div className="modal__wrapper">
             <img src="/modalIcon.svg" alt="상세모달 아이콘" />
-            <p>{getCreatedYMD(clickedAnswer.createdAt)}</p>
-            <p>{clickedAnswer.answer}</p>
-            <button>다른 답변 보기</button>
+            <p className="modal__createdAt">{getCreatedYMD(clickedAnswer.createdAt)}</p>
+            <p className="modal__answer">{clickedAnswer.answer}</p>
+            <button className="ToAnsersButton">다른 답변 보기</button>
           </div>
         </Modal>
       )}
