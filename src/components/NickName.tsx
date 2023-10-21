@@ -1,6 +1,14 @@
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
 const NickName = () => {
+  const [nickName, setNickName] = useState('');
+
+  const handleNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNickName(event.target.value);
+  };
+
+  const handleComplete = async () => {};
   return (
     <StyledQuestionContainer>
       <UserIcon>
@@ -68,9 +76,16 @@ const NickName = () => {
           <span>질문자님의 닉네임을 입력해주세요.</span>
           <span> 적어주신 닉네임은 답변자에게 공유됩니다.</span>
         </Title>
-        <PlaceHolder type="text" placeholder="닉네임을 입력하세요." />
+        <PlaceHolder
+          type="text"
+          placeholder="닉네임을 입력하세요."
+          value={nickName}
+          onChange={handleNickNameChange}
+        />
       </Wrapper>
-      <CompleteButton>다음</CompleteButton>
+      <CompleteButton onClick={handleComplete} disabled={nickName === '' ? true : false}>
+        다음
+      </CompleteButton>
     </StyledQuestionContainer>
   );
 };
@@ -152,6 +167,10 @@ const CompleteButton = styled.button`
   font-weight: 700;
   &:hover {
     background: #7aa3e9;
+  }
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
   }
 `;
 
