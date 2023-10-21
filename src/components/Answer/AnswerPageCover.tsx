@@ -4,7 +4,7 @@ import { AnswerPageProps, AnswerPageStep } from '../../pages/AnswerPage';
 
 const AnswerPageCover = ({ nickname, setStep }: AnswerPageProps) => {
   return (
-    <StyledAnswerPageCover>
+    <StyledAnswerPageCoverContainer>
       <h1 className="cover__title">
         {nickname}님으로부터
         <br />
@@ -16,13 +16,13 @@ const AnswerPageCover = ({ nickname, setStep }: AnswerPageProps) => {
       <button className="cover__button" onClick={() => setStep('main' as AnswerPageStep)}>
         답변하기
       </button>
-    </StyledAnswerPageCover>
+    </StyledAnswerPageCoverContainer>
   );
 };
 
 export default AnswerPageCover;
 
-const StyledAnswerPageCover = styled.section`
+const StyledAnswerPageCoverContainer = styled.section`
   padding-top: 150px;
   height: 100vh;
 
@@ -49,7 +49,7 @@ const StyledAnswerPageCover = styled.section`
 
   .cover__button {
     position: absolute;
-    bottom: 16px;
+    bottom: 100px;
     background-color: #86aff4;
     width: 327px;
     height: 48px;

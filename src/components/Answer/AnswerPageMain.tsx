@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
+import styled from 'styled-components';
 
 import { AnswerPageProps } from '../../pages/AnswerPage';
 
@@ -31,14 +32,84 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
   };
 
   return (
-    <section>
-      <h1>
-        {nickname}에게 {quesiton}에 대한 답변을 해주세요.
-        <input onChange={onChangeHandler} type="textarea" placeholder="답변하기" />
-        <button onClick={postAnswerHandler}>답변 제출하기</button>
+    <StyledAnswerPageMainContainer>
+      <img
+        className="main__pencilicon"
+        src="/answerMainPencil.svg"
+        alt="답변 메인 연필"
+      />
+      <h1 className="main__question">
+        {nickname}에게 답변해주세요.
+        <br />
+        {quesiton}
       </h1>
-    </section>
+      <p className="main__guidetext">안내 문구</p>
+      <input
+        onChange={onChangeHandler}
+        type="textarea"
+        placeholder="답변을 입력해주세요"
+        className="main__answertext"
+      />
+      <div className="main__buttonWrapper">
+        <button className="main__submitbutton" onClick={postAnswerHandler}>
+          답변 제출하기
+        </button>
+      </div>
+    </StyledAnswerPageMainContainer>
   );
 };
 
 export default AnswerPageMain;
+
+const StyledAnswerPageMainContainer = styled.section`
+  height: 100vh;
+  padding-top: 90px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+
+  .main__pencilicon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .main__question {
+    font-size: 20px;
+  }
+
+  .main__guidetext {
+    margin-top: 10px;
+    color: #939394;
+  }
+
+  .main__answertext {
+    width: 100%;
+    height: 400px;
+    border: none;
+    margin-top: 40px;
+  }
+
+  .main__answertext::placeholder {
+    position: absolute;
+    top: 0;
+  }
+
+  .main__buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .main__submitbutton {
+      position: absolute;
+      bottom: 100px;
+      background-color: #86aff4;
+      width: 327px;
+      height: 48px;
+      gap: 8px;
+      border-radius: 12px;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+  }
+`;
