@@ -14,7 +14,7 @@ const Paths = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/question" element={<QuestionPage />} />
-        <Route path="/question/:shareCode" element={<QuestionSharePage />} />
+        <Route path="/share" element={<QuestionSharePage />} />
         <Route path="/answer/:shareCode" element={<AnswerPage />} />
         <Route path="/confirm" element={<ConfirmPage />} />
         <Route path="/question/:confirmCode" element={<QuestionConfirmPage />} />

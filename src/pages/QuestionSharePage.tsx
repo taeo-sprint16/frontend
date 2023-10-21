@@ -27,7 +27,7 @@ const QuestionSharePage = () => {
       </Title>
       <img src="/logo.svg" alt="로고 이미지" />
       <StyledBottomBox>
-        <Button color="primary" onClick={() => handleShareCodeCopy('UUID')}>
+        <Button color="primary" onClick={() => handleShareCodeCopy('7716N2EK')}>
           질문 공유하기
         </Button>
         <Button color="disabled" onClick={() => confirmMessage('UUID/123456')}>
