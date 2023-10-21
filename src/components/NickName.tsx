@@ -95,7 +95,7 @@ const NickName = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  margin-top: 85px;
+  margin-top: 60px;
   width: 375px;
   height: 812px;
   background: #fff;
