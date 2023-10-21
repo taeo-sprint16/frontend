@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Modal from '../components/Modal/Modal';
+import SkeletonUi from '../components/Skeleton/SkeletonUi';
 import { getCreatedYMD } from '../utils/getCreatedYMD';
 // import { useParams } from 'react-router-dom';
 
@@ -31,12 +32,13 @@ const QuestionConfirmPage = () => {
   const mockConfirmCode = '5ADDTU09';
   const [myAnsersResponse, setMyAnswersResponse] = useState<ResponseData>();
   const router = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchMyAnswers()
       .then((responseData) => {
         setMyAnswersResponse(responseData.data);
-        console.log(responseData.data);
+        setIsLoading(false);
       })
       .catch((error) => console.error('내 질문지 가져오는 API 호출 오류 : ', error));
   }, []);
@@ -62,35 +64,38 @@ const QuestionConfirmPage = () => {
       <div className="questionConfirm__header">
         <img src="/questionIcon.svg" alt="질문 아이콘" />
         <h1 className="header__question">
-          &quot;{myAnsersResponse?.data.question}&quot;
+          &quot;{myAnsersResponse?.data.question ?? 'Loading...'}&quot;
         </h1>
         <img src="/aiIcon.svg" alt="AI 아이콘" />
         {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
-        {/* TODO: 스켈레톤 UI 및 로딩스피너 필요 */}
         <p className="header__aiAnalyzeText">
           {/* TODO:  AI TEXT 최대 50자 전달해야됨*/}
-          {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50)}
+          {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ?? 'Loading...'}
         </p>
       </div>
       <ul className="answersList">
         {/* 11부터 slice한 이유 mockData의 답변 값들이 10번까지 다 비어있음 */}
-        {myAnsersResponse?.data.answers.slice(11).map((answer) => (
-          <li className="answersList__item" key={answer.createdAt}>
-            <div>
-              <h3 className="answersList__item--answer">{answer.answer}</h3>
-              <p className="answersList__item--createdAt">
-                {getCreatedYMD(answer.createdAt)}
-              </p>
-            </div>
+        {isLoading ? (
+          <SkeletonUi />
+        ) : (
+          myAnsersResponse?.data.answers.slice(11).map((answer) => (
+            <li className="answersList__item" key={answer.createdAt}>
+              <div>
+                <h3 className="answersList__item--answer">{answer.answer}</h3>
+                <p className="answersList__item--createdAt">
+                  {getCreatedYMD(answer.createdAt)}
+                </p>
+              </div>
 
-            <button
-              className="modalButton"
-              onClick={() => handleClickSpecificAnswer(answer)}
-            >
-              <img src="/modalButton.svg" alt="상세모달창 띄우는 버튼" />
-            </button>
-          </li>
-        ))}
+              <button
+                className="modalButton"
+                onClick={() => handleClickSpecificAnswer(answer)}
+              >
+                <img src="/modalButton.svg" alt="상세모달창 띄우는 버튼" />
+              </button>
+            </li>
+          ))
+        )}
       </ul>
 
       <div className="question__buttons">
