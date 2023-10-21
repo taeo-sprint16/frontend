@@ -1,9 +1,35 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import Title from '../components/Title';
+import Toast from '../components/Toast';
 
 const QuestionSharePage = () => {
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleShareCodeCopy = () => {
+    setIsOpen(true);
+  };
+
+  const handleMoveHome = () => {
+    navigate('/');
+  };
+
+  useEffect(() => {
+    let timeId = 0;
+    if (isOpen) {
+      timeId = setTimeout(() => {
+        setIsOpen(false);
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [isOpen]);
+
   return (
     <StyledContainer>
       <Title>
@@ -15,13 +41,20 @@ const QuestionSharePage = () => {
       </Title>
       <img src="/logo.svg" alt="로고 이미지" />
       <StyledBottomBox>
-        <Button color="primary" onClick={() => alert('질문링크 복사')}>
+        <Button color="primary" onClick={handleShareCodeCopy}>
           질문 공유하기
         </Button>
         <Button color="disabled" onClick={() => alert('확인코드 복사')}>
           확인 코드
         </Button>
-        <StyledText>새 질문 만들기</StyledText>
+
+        {isOpen && (
+          <StyledToastMessage>
+            <Toast />
+          </StyledToastMessage>
+        )}
+
+        <StyledText onClick={handleMoveHome}>새 질문 만들기</StyledText>
       </StyledBottomBox>
     </StyledContainer>
   );
@@ -53,6 +86,15 @@ const StyledBottomBox = styled.div`
   gap: 8px;
 
   text-align: center;
+
+  transform: translateX(-50%);
+`;
+
+const StyledToastMessage = styled.div`
+  position: absolute;
+
+  top: -44px;
+  left: 50%;
 
   transform: translateX(-50%);
 `;

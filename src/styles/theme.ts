@@ -2,6 +2,8 @@ const color = {
   primary: '#86AFF4',
   disabled: '#A7BFE8',
   gray100: '#0f122e',
+  gray200: '#4D5069',
+  gray300: '#939394',
   white: '#fff',
 };
 
