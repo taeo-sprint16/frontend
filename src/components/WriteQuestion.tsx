@@ -1,18 +1,51 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
+
+type KeyWord = '장점' | '단점' | '첫인상' | '성격';
 
 const WriteQuestion = () => {
   const [question, setQuestion] = useState('');
+
   const ref = useRef<HTMLTextAreaElement | null>(null);
+
   const handleQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestion(event.target.value);
     adjustTextareaHeight();
   };
 
+  const updatePlaceHodler = (word: string) => {
+    let placeholderText = '';
+    switch (word) {
+      case '장점':
+        placeholderText = '내 장점에 대한 질문을 적어보세요.';
+        break;
+      case '단점':
+        placeholderText = '내 단점에 대한 질문을 적어보세요.';
+        break;
+      case '첫인상':
+        placeholderText = '제 첫인상은 어떤가요?';
+        break;
+      case '성격':
+        placeholderText = '제 성격은 어떤가요??';
+        break;
+      default:
+        placeholderText = '질문을 입력하세요.';
+        break;
+    }
+
+    setQuestion('');
+    if (ref.current) ref.current.placeholder = placeholderText;
+  };
+
+  const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const selectedKeyword = (event.currentTarget.textContent || '') as KeyWord;
+    updatePlaceHodler(selectedKeyword);
+  };
+
   const adjustTextareaHeight = () => {
     const textarea = ref.current;
     if (textarea) {
-      textarea.style.height = 'auto';
+      textarea.style.height = '0';
       textarea.style.height = textarea.scrollHeight + 'px';
     }
   };
@@ -86,14 +119,14 @@ const WriteQuestion = () => {
           </span>
         </Title>
         <ButtonContainer>
-          <Button>장점</Button>
-          <Button>단점</Button>
-          <Button>첫인상</Button>
-          <Button>성격</Button>
+          <Button onClick={handleSelect}>장점</Button>
+          <Button onClick={handleSelect}>단점</Button>
+          <Button onClick={handleSelect}>첫인상</Button>
+          <Button onClick={handleSelect}>성격</Button>
         </ButtonContainer>
         <PlaceHolder
           ref={ref}
-          placeholder="질문을 입력하세요."
+          placeholder={'질문을 입력하세요.'}
           value={question}
           onChange={handleQuestion}
         />
@@ -104,7 +137,7 @@ const WriteQuestion = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  margin-top: 85px;
+  margin-top: 60px;
   width: 375px;
   height: 812px;
   background: #fff;
@@ -162,24 +195,6 @@ const Button = styled.button`
   }
 `;
 
-const PlaceHolder = styled.textarea`
-  text-align: center;
-  font:
-    normal 500 16px / normal 'Pretendard',
-    sans-serif;
-  border: none;
-  margin-bottom: 453px;
-  &::placeholder {
-    padding-right: 15px;
-  }
-  resize: none;
-  width: 100%;
-  min-height: 100px;
-  overflow: hidden;
-  outline: none;
-  border: 1px solid #58a3b3;
-`;
-
 const CompleteButton = styled.button`
   display: flex;
   width: 375px;
@@ -198,4 +213,23 @@ const CompleteButton = styled.button`
     background: #7aa3e9;
   }
 `;
+
+const PlaceHolder = styled.textarea`
+  text-align: center;
+  font:
+    normal 500 16px / normal 'Pretendard',
+    sans-serif;
+  border: none;
+  margin-bottom: 453px;
+  &::placeholder {
+    padding-right: 15px;
+  }
+  resize: none;
+  width: 100%;
+  min-height: 100px;
+  overflow: hidden;
+  outline: none;
+  border: 1px solid #58a3b3;
+`;
+
 export default WriteQuestion;
