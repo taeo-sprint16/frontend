@@ -10,7 +10,7 @@ const API_ANSWER_POST_URL =
 const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
   const [answerText, setAnswerText] = useState('');
 
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setAnswerText(event.target.value);
   };
 
@@ -44,9 +44,8 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
         {quesiton}
       </h1>
       <p className="main__guidetext">안내 문구</p>
-      <input
+      <textarea
         onChange={onChangeHandler}
-        type="textarea"
         placeholder="답변을 입력해주세요"
         className="main__answertext"
       />
