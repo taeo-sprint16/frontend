@@ -1,34 +1,20 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import Button from '../components/Button';
 import Title from '../components/Title';
 import Toast from '../components/Toast';
+import useClipboard from '../hooks/useClipboard';
+import useKakaoShare from '../hooks/useKakaoShare';
 
 const QuestionSharePage = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const handleShareCodeCopy = () => {
-    setIsOpen(true);
-  };
+  const { confirmMessage } = useKakaoShare();
+  const { handleShareCodeCopy, isOpen } = useClipboard();
 
   const handleMoveHome = () => {
     navigate('/');
   };
-
-  useEffect(() => {
-    let timeId = 0;
-    if (isOpen) {
-      timeId = setTimeout(() => {
-        setIsOpen(false);
-      }, 3000);
-    }
-    return () => {
-      clearTimeout(timeId);
-    };
-  }, [isOpen]);
 
   return (
     <StyledContainer>
@@ -41,18 +27,16 @@ const QuestionSharePage = () => {
       </Title>
       <img src="/logo.svg" alt="로고 이미지" />
       <StyledBottomBox>
-        <Button color="primary" onClick={handleShareCodeCopy}>
+        <Button color="primary" onClick={() => handleShareCodeCopy('UUID')}>
           질문 공유하기
         </Button>
-        <Button color="disabled" onClick={() => alert('확인코드 복사')}>
+        <Button color="disabled" onClick={() => confirmMessage('UUID/123456')}>
           확인 코드
         </Button>
 
-        {isOpen && (
-          <StyledToastMessage>
-            <Toast />
-          </StyledToastMessage>
-        )}
+        <StyledToastMessage $isOpen={isOpen}>
+          <Toast />
+        </StyledToastMessage>
 
         <StyledText onClick={handleMoveHome}>새 질문 만들기</StyledText>
       </StyledBottomBox>
@@ -90,13 +74,40 @@ const StyledBottomBox = styled.div`
   transform: translateX(-50%);
 `;
 
-const StyledToastMessage = styled.div`
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-20%);
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(-20%);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20%);
+    display: none;
+  }
+`;
+
+const StyledToastMessage = styled.div<{ $isOpen: boolean }>`
   position: absolute;
 
   top: -44px;
-  left: 50%;
+  width: 100%;
 
-  transform: translateX(-50%);
+  opacity: 0;
+
+  animation-name: ${({ $isOpen }) => ($isOpen ? fadeIn : fadeOut)};
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
 `;
 
 const StyledText = styled.span`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Toast = () => {
   return (
     <StyledToast>
-      <img src="https://placeholder.com/20x20" alt="링크 아이콘" />
+      <img src="/icons/link.svg" alt="링크 아이콘" />
       질문 링크가 복사됐어요
     </StyledToast>
   );
@@ -12,7 +12,11 @@ const Toast = () => {
 export default Toast;
 
 const StyledToast = styled.span`
+  cursor: default;
+
   padding: 7.5px 16px;
+  margin: 0 auto;
+  width: fit-content;
 
   display: flex;
   flex-direction: row;
