@@ -135,11 +135,9 @@ const Button = styled.button`
 
 const PlaceHolder = styled.input`
   text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
+  font:
+    normal 500 16px / normal 'Pretendard',
+    sans-serif;
   border: none;
   margin-bottom: 453px;
   &::placeholder {

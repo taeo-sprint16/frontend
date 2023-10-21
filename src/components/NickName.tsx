@@ -107,11 +107,9 @@ const Title = styled.div`
     font-weight: bold;
   }
   span:nth-child(1) {
-    font-family: Pretendard;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+    font:
+      normal 700 20px / normal 'Pretendard',
+      sans-serif;
     text-transform: capitalize;
   }
   span:nth-child(2) {
@@ -127,11 +125,10 @@ const Title = styled.div`
 
 const PlaceHolder = styled.input`
   text-align: center;
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
+  font:
+    500 16px 'Pretendard',
+    sans-serif;
+  line-height: 20px;
   border: none;
   margin-bottom: 453px;
   &::placeholder {
