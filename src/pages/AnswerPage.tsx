@@ -13,7 +13,7 @@ export type AnswerPageStep = 'cover' | 'main' | 'complete';
 
 export type AnswerPageProps = {
   nickname: string | undefined;
-  quesiton: string | undefined;
+  quesiton?: string | undefined;
   setStep: React.Dispatch<React.SetStateAction<AnswerPageStep>>;
 };
 
@@ -53,11 +53,7 @@ const AnswerPage = () => {
   return (
     <div>
       {step === 'cover' && (
-        <AnswerPageCover
-          nickname={questionShareData?.data.nickname}
-          quesiton={questionShareData?.data.question}
-          setStep={setStep}
-        />
+        <AnswerPageCover nickname={questionShareData?.data.nickname} setStep={setStep} />
       )}
 
       {step === 'main' && (
