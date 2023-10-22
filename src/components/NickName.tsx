@@ -98,13 +98,15 @@ const NickName = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  width: 20.4rem;
-  height: 100vh;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
+  @media (max-width: 480px) {
+    width: 20.4rem;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
 `;
 
 const UserIcon = styled.svg`
@@ -151,7 +153,6 @@ const Title = styled.div`
 const PlaceHolder = styled.input`
   text-align: left;
   font: normal 500 1rem / normal 'Pretendard';
-
   border: none;
   margin-bottom: 28rem;
   &::placeholder {
@@ -161,10 +162,8 @@ const PlaceHolder = styled.input`
   display: flex;
   justify-content: flex-start;
   width: 100%;
-
   overflow: hidden;
   outline: none;
-  border: 1px solid #58a3b3;
 `;
 
 const CompleteButton = styled.button`
