@@ -53,7 +53,7 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
         <br />
         {quesiton}
       </h1>
-      <p className="main__guidetext">안내 문구</p>
+      <p className="main__guidetext">최대 글자수는 50자입니다.</p>
       <textarea
         onChange={onChangeHandler}
         placeholder="답변을 입력해주세요"
@@ -88,15 +88,15 @@ const StyledAnswerPageMainContainer = styled.section`
   }
 
   .main__guidetext {
-    margin-top: 10px;
     color: #939394;
+    margin: 0;
   }
 
   .main__answertext {
     width: 100%;
-    height: 400px;
+    height: 50vh;
     border: none;
-    margin-top: 40px;
+    margin-top: 24px;
   }
 
   .main__answertext::placeholder {
@@ -110,12 +110,12 @@ const StyledAnswerPageMainContainer = styled.section`
     justify-content: center;
     .main__submitbutton {
       position: absolute;
-      bottom: 100px;
+      bottom: 40px;
       background-color: #86aff4;
-      width: 327px;
+      width: 90%;
       height: 48px;
       gap: 8px;
-      border-radius: 12px;
+      border-radius: 24px;
       border: none;
       color: white;
       cursor: pointer;
