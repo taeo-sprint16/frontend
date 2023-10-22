@@ -25,8 +25,7 @@ interface ResponseData {
   };
 }
 
-const API_MY_ANSWERS_URL =
-  'http://aboutme.ap-northeast-2.elasticbeanstalk.com/api/content/confirm';
+const API_MY_ANSWERS_URL = import.meta.env.VITE_BASE_URL;
 
 const QuestionConfirmPage = () => {
   // const { confirmCode } = useParams();
