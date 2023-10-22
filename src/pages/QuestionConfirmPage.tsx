@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import axiosInstance from '../apis/createAxiosRequestInstance';
 import Modal from '../components/Modal/Modal';
 import SkeletonUi from '../components/Skeleton/SkeletonUi';
 import useClipboard from '../hooks/useClipboard';
@@ -25,8 +25,6 @@ interface ResponseData {
   };
 }
 
-const API_MY_ANSWERS_URL = import.meta.env.VITE_BASE_URL;
-
 const QuestionConfirmPage = () => {
   // const { confirmCode } = useParams();
   const mockConfirmCode = '5ADDTU09';
@@ -45,8 +43,12 @@ const QuestionConfirmPage = () => {
   }, []);
 
   const fetchMyAnswers = async () => {
-    const data = await axios.post(API_MY_ANSWERS_URL, {
-      confirmCode: mockConfirmCode,
+    const data = await axiosInstance.request({
+      method: 'post',
+      url: 'api/content/confirm',
+      data: {
+        confirmCode: mockConfirmCode,
+      },
     });
     return data;
   };

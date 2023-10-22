@@ -1,13 +1,10 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
+import axiosInstance from '../apis/createAxiosRequestInstance';
 import AnswerCompletePage from '../components/Answer/AnswerCompletePage';
 import AnswerPageCover from '../components/Answer/AnswerPageCover';
 import AnswerPageMain from '../components/Answer/AnswerPageMain';
 // import { useParams } from 'react-router-dom';
-
-const API_SHARE_URL =
-  'http://aboutme.ap-northeast-2.elasticbeanstalk.com/api/content/share';
 
 export type AnswerPageStep = 'cover' | 'main' | 'complete';
 
@@ -42,8 +39,12 @@ const AnswerPage = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await axios.post(API_SHARE_URL, {
-      shareCode: mockShareCode,
+    const data = await axiosInstance.request({
+      method: 'post',
+      url: 'api/content/share',
+      data: {
+        shareCode: mockShareCode,
+      },
     });
     return data;
   };

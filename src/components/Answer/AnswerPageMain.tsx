@@ -1,11 +1,13 @@
-import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
+import axiosInstance from '../../apis/createAxiosRequestInstance';
 import { AnswerPageProps } from '../../pages/AnswerPage';
 
-const API_ANSWER_POST_URL =
-  'http://aboutme.ap-northeast-2.elasticbeanstalk.com/api/content/answer';
+interface ResponseData {
+  success: boolean;
+  message: string;
+}
 
 const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
   const [answerText, setAnswerText] = useState('');
@@ -16,12 +18,16 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
 
   const postAnswerHandler = async () => {
     try {
-      const response = await axios.post(API_ANSWER_POST_URL, {
-        shareCode: '7716N2EK',
-        answer: answerText,
+      const response = await axiosInstance.request({
+        method: 'post',
+        url: 'api/content/answer',
+        data: {
+          shareCode: '7716N2EK',
+          answer: answerText,
+        },
       });
-      if (response.data === 'Created') {
-        console.log(response);
+      const responseData: ResponseData = response.data;
+      if (responseData.success) {
         setStep('complete');
       } else {
         console.log('답변 작성에 실패했습니다.');
