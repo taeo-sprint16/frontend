@@ -10,8 +10,13 @@ const AnswerPageCover = ({ nickname, setStep }: AnswerPageProps) => {
         <br />
         질문이 들어왔어요!
       </h1>
+      <p className="cover__description">
+        답변하기를 눌러 {nickname}님에 대해 알려주세요.
+      </p>
 
-      <img className="cover__icon" src="/answerCoverIcon.svg" alt="답변 커버 아이콘" />
+      <div className="cover__iconContainer">
+        <img className="cover__icon" src="/answerCoverIcon.svg" alt="답변 커버 아이콘" />
+      </div>
 
       <button className="cover__button" onClick={() => setStep('main' as AnswerPageStep)}>
         답변하기
@@ -23,7 +28,7 @@ const AnswerPageCover = ({ nickname, setStep }: AnswerPageProps) => {
 export default AnswerPageCover;
 
 const StyledAnswerPageCoverContainer = styled.section`
-  padding-top: 150px;
+  padding-top: 100px;
   height: 100vh;
 
   display: flex;
@@ -34,29 +39,48 @@ const StyledAnswerPageCoverContainer = styled.section`
 
   .cover__title {
     width: 200px;
-    height: 72px;
     font-size: 24px;
     line-height: 36px;
     text-align: center;
     color: #0f122e;
-    margin-bottom: 35px;
+    margin: 0;
   }
 
-  .cover__icon {
-    width: 280px;
-    height: 280px;
+  .cover__description {
+    color: rgba(77, 80, 105, 1);
+    font-weight: 600;
+    font-size: 16px;
+    margin: 8px 0 0 0;
+  }
+
+  .cover__iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 70px 0;
+
+    .cover__icon {
+      width: 307.29px;
+      height: 175px;
+    }
   }
 
   .cover__button {
     position: absolute;
-    bottom: 100px;
-    background-color: #86aff4;
-    width: 327px;
+    bottom: 40px;
+    width: 90%;
+    background-color: rgba(131, 163, 216, 1);
+
     height: 48px;
     gap: 8px;
-    border-radius: 12px;
+    padding: 8px;
+    border-radius: 24px;
     border: none;
-    color: white;
+    color: rgba(255, 255, 255, 1);
     cursor: pointer;
+  }
+
+  .cover__button:hover {
+    background-color: rgba(101, 132, 183, 1);
   }
 `;

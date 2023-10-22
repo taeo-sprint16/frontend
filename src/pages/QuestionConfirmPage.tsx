@@ -1,11 +1,15 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import axiosInstance from '../apis/createAxiosRequestInstance';
+import LoadingDots from '../components/Loading/LoadingDots';
+import LoadingSpinner from '../components/Loading/LoadingSpinner';
 import Modal from '../components/Modal/Modal';
-import SkeletonUi from '../components/Skeleton/SkeletonUi';
-import { clipboardText } from '../utils/clipboardWrite';
+
+import CustomSuspense from '../components/Suspense/CustomSuspense';
+import useClipboard from '../hooks/useClipboard';
+
 import { getCreatedYMD } from '../utils/getCreatedYMD';
 // import { useParams } from 'react-router-dom';
 
@@ -25,9 +29,6 @@ interface ResponseData {
   };
 }
 
-const API_MY_ANSWERS_URL =
-  'http://aboutme.ap-northeast-2.elasticbeanstalk.com/api/content/confirm';
-
 const QuestionConfirmPage = () => {
   // const { confirmCode } = useParams();
   const mockConfirmCode = '5ADDTU09';
@@ -45,8 +46,12 @@ const QuestionConfirmPage = () => {
   }, []);
 
   const fetchMyAnswers = async () => {
-    const data = await axios.post(API_MY_ANSWERS_URL, {
-      confirmCode: mockConfirmCode,
+    const data = await axiosInstance.request({
+      method: 'post',
+      url: 'api/content/confirm',
+      data: {
+        confirmCode: mockConfirmCode,
+      },
     });
     return data;
   };
@@ -68,31 +73,42 @@ const QuestionConfirmPage = () => {
   };
 
   return (
-    <StyledQuestionConfirmContainer>
-      <div className="questionConfirm__header">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/questionIcon.svg" alt="질문 아이콘" />
-          <span style={{ marginLeft: '8px' }}>내가 한 질문</span>
+    <CustomSuspense
+      fallback={
+        <LoaderContainer>
+          <div className="loader__header">
+            <img src="/aiIcon.svg" alt="AI 아이콘" />
+            <span>AI가 답변들을 분석중이에요</span>
+            {isLoading && <LoadingDots />}
+          </div>
+          <LoadingSpinner />
+        </LoaderContainer>
+      }
+      maxDuration={5000}
+    >
+      <StyledQuestionConfirmContainer>
+        <div className="questionConfirm__header">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/questionIcon.svg" alt="질문 아이콘" />
+            <span style={{ marginLeft: '8px' }}>내가 한 질문</span>
+          </div>
+          <h1 className="header__question">
+            {/* {myAnsersResponse?.data.question ?? '질문을 가져오는 중이에요'}
+            {isLoading && <LoadingDots />} */}
+            {myAnsersResponse?.data.question}
+          </h1>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/aiIcon.svg" alt="AI 아이콘" />
+            <span style={{ marginLeft: '8px' }}>응답자 의견 요약</span>
+          </div>
+          {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
+          <p className="header__aiAnalyzeText">{myAnsersResponse?.data.aiAnalyzeText}</p>
         </div>
-        <h1 className="header__question">
-          {myAnsersResponse?.data.question ?? 'Loading...'}
-        </h1>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/aiIcon.svg" alt="AI 아이콘" />
-          <span style={{ marginLeft: '8px' }}>응답자 의견 요약</span>
-        </div>
-        {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
-        <p className="header__aiAnalyzeText">
-          {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ?? 'Loading...'}
-        </p>
-      </div>
 
-      <ul className="answersList">
-        {/* 12부터 slice한 이유 mockData의 답변 값들이 11번까지 다 비어있음 */}
-        {isLoading ? (
-          <SkeletonUi />
-        ) : (
-          myAnsersResponse?.data.answers.slice(12).map((answer) => (
+        <ul className="answersList">
+          {/* 12부터 slice한 이유 mockData의 답변 값들이 11번까지 다 비어있음 */}
+
+          {myAnsersResponse?.data.answers.slice(12).map((answer) => (
             // eslint-disable-next-line
             <li
               className="answersList__item"
@@ -110,44 +126,72 @@ const QuestionConfirmPage = () => {
                 <img src="/modalButton.svg" alt="상세모달창 띄우는 버튼" />
               </button>
             </li>
-          ))
+          ))}
+        </ul>
+
+        <div className="question__buttons">
+          <button className="question__addButton" onClick={() => router('/question')}>
+            질문 추가하기
+          </button>
+          <button
+            onClick={() => {
+              handleShareCodeCopy('7716N2EK');
+              popCopyMessage();
+            }}
+            className="question__shareButton"
+          >
+            <span style={{ fontWeight: 700, fontSize: '16px' }}>질문 공유하기</span>
+          </button>
+        </div>
+
+        {isOpenCopyMessage && (
+          <img className="copyToast" src="/copyToast.svg" alt="복사 완료 토스트 메시지" />
         )}
-      </ul>
-
-      <div className="question__buttons">
-        <button className="question__addButton" onClick={() => router('/question')}>
-          질문 추가하기
-        </button>
-        <button
-          onClick={() => {
-            clipboardText('7716N2EK');
-            popCopyMessage();
-          }}
-          className="question__shareButton"
-        >
-          <span style={{ fontWeight: 700, fontSize: '16px' }}>질문 공유하기</span>
-        </button>
-      </div>
-
-      {isOpenCopyMessage && (
-        <img className="copyToast" src="/copyToast.svg" alt="복사 완료 토스트 메시지" />
-      )}
-
-      {isOpen && clickedAnswer && (
-        <Modal onClose={() => setIsOpen(false)}>
-          <div className="modal__wrapper">
-            <img src="/modalIcon.svg" alt="상세모달 아이콘" />
-            <p className="modal__createdAt">{getCreatedYMD(clickedAnswer.createdAt)}</p>
-            <p className="modal__answer">{clickedAnswer.answer}</p>
-            <button className="ToAnsersButton">다른 답변 보기</button>
-          </div>
-        </Modal>
-      )}
-    </StyledQuestionConfirmContainer>
+        
+        {isOpen && clickedAnswer && (
+          <Modal onClose={() => setIsOpen(false)}>
+            <div className="modal__wrapper">
+              <img src="/modalIcon.svg" alt="상세모달 아이콘" />
+              <p className="modal__createdAt">{getCreatedYMD(clickedAnswer.createdAt)}</p>
+              <p className="modal__answer">{clickedAnswer.answer}</p>
+              <button className="ToAnsersButton">다른 답변 보기</button>
+            </div>
+          </Modal>
+        )}
+      </StyledQuestionConfirmContainer>
+    </CustomSuspense>
   );
 };
 
 export default QuestionConfirmPage;
+
+const LoaderContainer = styled.div`
+  width: 100%;
+  max-width: 600px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  .loader__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+
+    span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    img {
+      margin-right: 8px;
+    }
+  }
+`;
 
 const StyledQuestionConfirmContainer = styled.div`
   width: 100%;
@@ -190,7 +234,7 @@ const StyledQuestionConfirmContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 55vh;
+    height: 42vh;
     overflow-y: scroll;
     padding: 0 24px;
 
