@@ -9,10 +9,14 @@ const axiosConfig: AxiosRequestConfig = {
   },
 };
 
-const instance: Axios = axios.create(axiosConfig);
+const axiosInstance: Axios = axios.create(axiosConfig);
 
-instance.interceptors.request.use(
-  (config) => {
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const healthChecker = await axios.get(API_BASE_URL);
+    if (healthChecker.data === 'OK') {
+      console.log('✅서버 상태 OK');
+    }
     return config;
   },
   (error) => {
@@ -20,4 +24,4 @@ instance.interceptors.request.use(
   },
 );
 
-export default instance;
+export default axiosInstance;
