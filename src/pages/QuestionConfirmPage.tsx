@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import axiosInstance from '../apis/createAxiosRequestInstance';
+import LoadingDots from '../components/Loading/LoadingDots';
 import Modal from '../components/Modal/Modal';
 import SkeletonUi from '../components/Skeleton/SkeletonUi';
 import useClipboard from '../hooks/useClipboard';
@@ -77,7 +78,8 @@ const QuestionConfirmPage = () => {
           <span style={{ marginLeft: '8px' }}>내가 한 질문</span>
         </div>
         <h1 className="header__question">
-          {myAnsersResponse?.data.question ?? 'Loading...'}
+          {myAnsersResponse?.data.question ?? '질문을 가져오는 중이에요'}
+          {isLoading && <LoadingDots />}
         </h1>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img src="/aiIcon.svg" alt="AI 아이콘" />
@@ -85,7 +87,9 @@ const QuestionConfirmPage = () => {
         </div>
         {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
         <p className="header__aiAnalyzeText">
-          {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ?? 'Loading...'}
+          {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ??
+            'AI가 답변들을 분석중이에요'}
+          {isLoading && <LoadingDots />}
         </p>
       </div>
 
