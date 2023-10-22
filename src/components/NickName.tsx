@@ -146,7 +146,7 @@ const Title = styled.div`
 `;
 
 const PlaceHolder = styled.input`
-  text-align: center;
+  text-align: left;
   font:
     500 16px 'Pretendard',
     sans-serif;
