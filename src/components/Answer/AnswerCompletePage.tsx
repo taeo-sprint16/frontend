@@ -5,7 +5,13 @@ const AnswerCompletePage = () => {
   const router = useNavigate();
   return (
     <StyledAnswerPageCompleteContainer>
-      <h1 className="complete__title">답변이 완료되었습니다.</h1>
+      <h1 className="complete__title">
+        답변이 완료됐어요!
+        <br />
+        질문을 만들어서 공유하고 싶다면
+        <br />
+        {`'질문 만들기'를 눌러주세요.`}
+      </h1>
 
       <img
         className="complete__icon"
@@ -36,24 +42,32 @@ const StyledAnswerPageCompleteContainer = styled.section`
 
   .complete__title {
     font-size: 24px;
+    line-height: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
   }
 
   .complete__icon {
-    width: 240px;
-    height: 210px;
-    margin-top: 100px;
+    width: 236px;
+    height: 175px;
+    margin: 52px 0;
   }
 
   .complete__button--RouteToQuestion {
     position: absolute;
-    bottom: 100px;
-    background-color: #86aff4;
-    width: 327px;
+    bottom: 40px;
+    background-color: rgba(131, 163, 216, 1);
+    width: 90%;
     height: 48px;
     gap: 8px;
-    border-radius: 12px;
+    border-radius: 24px;
     border: none;
     color: white;
     cursor: pointer;
+  }
+
+  .complete__button--RouteToQuestion:hover {
+    background-color: rgba(101, 132, 183, 1);
   }
 `;

@@ -1,27 +1,37 @@
-import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
+import axiosInstance from '../../apis/createAxiosRequestInstance';
 import { AnswerPageProps } from '../../pages/AnswerPage';
 
-const API_ANSWER_POST_URL =
-  'http://aboutme.ap-northeast-2.elasticbeanstalk.com/api/content/answer';
+interface ResponseData {
+  success: boolean;
+  message: string;
+}
 
 const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
   const [answerText, setAnswerText] = useState('');
 
   const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (event.target.value.length > 50) {
+      return;
+    }
+
     setAnswerText(event.target.value);
   };
 
   const postAnswerHandler = async () => {
     try {
-      const response = await axios.post(API_ANSWER_POST_URL, {
-        shareCode: '7716N2EK',
-        answer: answerText,
+      const response = await axiosInstance.request({
+        method: 'post',
+        url: 'api/content/answer',
+        data: {
+          shareCode: '7716N2EK',
+          answer: answerText,
+        },
       });
-      if (response.data === 'Created') {
-        console.log(response);
+      const responseData: ResponseData = response.data;
+      if (responseData.success) {
         setStep('complete');
       } else {
         console.log('답변 작성에 실패했습니다.');
@@ -43,7 +53,7 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
         <br />
         {quesiton}
       </h1>
-      <p className="main__guidetext">안내 문구</p>
+      <p className="main__guidetext">최대 글자수는 50자입니다.</p>
       <textarea
         onChange={onChangeHandler}
         placeholder="답변을 입력해주세요"
@@ -78,15 +88,15 @@ const StyledAnswerPageMainContainer = styled.section`
   }
 
   .main__guidetext {
-    margin-top: 10px;
     color: #939394;
+    margin: 0;
   }
 
   .main__answertext {
     width: 100%;
-    height: 400px;
+    height: 50vh;
     border: none;
-    margin-top: 40px;
+    margin-top: 24px;
   }
 
   .main__answertext::placeholder {
@@ -100,12 +110,12 @@ const StyledAnswerPageMainContainer = styled.section`
     justify-content: center;
     .main__submitbutton {
       position: absolute;
-      bottom: 100px;
+      bottom: 40px;
       background-color: #86aff4;
-      width: 327px;
+      width: 90%;
       height: 48px;
       gap: 8px;
-      border-radius: 12px;
+      border-radius: 24px;
       border: none;
       color: white;
       cursor: pointer;

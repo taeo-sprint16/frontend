@@ -17,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "recoil": "^0.7.7",
+    "react-spinners": "^0.13.8",
     "styled-components": "^6.1.0"
   },
   "devDependencies": {
