@@ -87,8 +87,7 @@ const QuestionConfirmPage = () => {
         </div>
         {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
         <p className="header__aiAnalyzeText">
-          {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ??
-            'AI가 답변들을 분석중이에요'}
+          {myAnsersResponse?.data.aiAnalyzeText ?? 'AI가 답변들을 분석중이에요'}
           {isLoading && <LoadingDots />}
         </p>
       </div>
