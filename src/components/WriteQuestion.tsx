@@ -16,6 +16,9 @@ const WriteQuestion = () => {
   const [question, setQuestion] = useState('');
   const [count, setCount] = useState(0);
   const [doneClicked, setDoneClicked] = useState(false);
+
+  const [activeButton, setActiveButton] = useState('');
+
   const navigate = useNavigate();
 
   const nickName = useRecoilValue(nickNameState);
@@ -47,23 +50,14 @@ const WriteQuestion = () => {
   };
 
   const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     const selectedKeyword = (event.currentTarget.textContent || '') as KeyWord;
+    if (activeButton === selectedKeyword) return;
     updatePlaceHodler(selectedKeyword);
+    setActiveButton(selectedKeyword);
   };
 
-  // const adjustTextareaHeight = () => {
-  //   const textarea = ref.current;
-  //   if (textarea) {
-  //     textarea.style.height = '0';
-  //     textarea.style.height = textarea.scrollHeight + 'px';
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   adjustTextareaHeight();
-  // }, []);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCompleteQuestion = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const res = await axios({
       method: 'POST',
@@ -80,7 +74,7 @@ const WriteQuestion = () => {
   };
 
   return (
-    <StyledQuestionContainer onSubmit={handleSubmit}>
+    <StyledQuestionContainer>
       <WriteIcon>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -146,10 +140,21 @@ const WriteQuestion = () => {
           </span>
         </Title>
         <ButtonContainer>
-          <Button onClick={handleSelect}>장점</Button>
-          <Button onClick={handleSelect}>단점</Button>
-          <Button onClick={handleSelect}>첫인상</Button>
-          <Button onClick={handleSelect}>성격</Button>
+          <Button onClick={handleSelect} active={activeButton === '장점'}>
+            장점
+          </Button>
+
+          <Button onClick={handleSelect} active={activeButton === '단점'}>
+            단점
+          </Button>
+
+          <Button onClick={handleSelect} active={activeButton === '첫인상'}>
+            첫인상
+          </Button>
+
+          <Button onClick={handleSelect} active={activeButton === '성격'}>
+            성격
+          </Button>
         </ButtonContainer>
         <PlaceHolder
           ref={ref}
@@ -159,7 +164,10 @@ const WriteQuestion = () => {
         />
       </Wrapper>
       {doneClicked ? (
-        <CompleteButton disabled={question === '' ? true : false}>
+        <CompleteButton
+          onClick={handleCompleteQuestion}
+          disabled={question === '' ? true : false}
+        >
           질문 작성 완료
         </CompleteButton>
       ) : (
@@ -229,7 +237,7 @@ const ButtonContainer = styled.div`
   gap: 8px;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ active: boolean }>`
   display: flex;
   height: 1.75rem;
   padding: 0.5rem 0.75rem;
@@ -239,7 +247,7 @@ const Button = styled.button`
   font-weight: 600;
   color: #939394;
   border-radius: 1rem;
-  background: #f4f5f9;
+  background: ${(props) => (props.active ? '#7aa3e9' : '#f4f5f9')};
   cursor: pointer;
   &:focus {
     background: #7aa3e9;
