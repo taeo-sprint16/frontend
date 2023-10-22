@@ -13,6 +13,10 @@ const AnswerPageMain = ({ nickname, quesiton, setStep }: AnswerPageProps) => {
   const [answerText, setAnswerText] = useState('');
 
   const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (event.target.value.length > 50) {
+      return;
+    }
+
     setAnswerText(event.target.value);
   };
 
