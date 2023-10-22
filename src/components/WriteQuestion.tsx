@@ -1,5 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+
+import { nickNameState } from '../atom';
 
 type KeyWord = '장점' | '단점' | '첫인상' | '성격';
 
@@ -9,12 +14,23 @@ interface PlaceHolderProps {
 
 const WriteQuestion = () => {
   const [question, setQuestion] = useState('');
+  const [count, setCount] = useState(0);
+  const [doneClicked, setDoneClicked] = useState(false);
+  const navigate = useNavigate();
+
+  const nickName = useRecoilValue(nickNameState);
 
   const ref = useRef<HTMLTextAreaElement | null>(null);
 
   const handleQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setQuestion(event.target.value);
-    adjustTextareaHeight();
+    const inputText = event.target.value;
+    setQuestion(inputText);
+    // adjustTextareaHeight();
+    setCount(inputText.length);
+  };
+
+  const handleDoneClick = () => {
+    setDoneClicked(true);
   };
 
   const updatePlaceHodler = (word: string) => {
@@ -35,20 +51,36 @@ const WriteQuestion = () => {
     updatePlaceHodler(selectedKeyword);
   };
 
-  const adjustTextareaHeight = () => {
-    const textarea = ref.current;
-    if (textarea) {
-      textarea.style.height = '0';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    }
+  // const adjustTextareaHeight = () => {
+  //   const textarea = ref.current;
+  //   if (textarea) {
+  //     textarea.style.height = '0';
+  //     textarea.style.height = textarea.scrollHeight + 'px';
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   adjustTextareaHeight();
+  // }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const res = await axios({
+      method: 'POST',
+      url: import.meta.env.VITE_BASE_URL + '/api/content/create',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        nickname: nickName,
+        question,
+      }),
+    });
+    navigate(`/share?confirmCode${res.data.confirmCode}&shareCode=${res.data.shareCode}`);
   };
 
-  useEffect(() => {
-    adjustTextareaHeight();
-  }, []);
-
   return (
-    <StyledQuestionContainer>
+    <StyledQuestionContainer onSubmit={handleSubmit}>
       <WriteIcon>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +140,9 @@ const WriteQuestion = () => {
         <Title>
           <span>나에 대해 알고 싶은 질문을 적어보세요.</span>
           <span>
-            적절한 질문이 생각나지 않는다면 키워드 선택으로 질문을 입력해보세요.
+            적절한 질문이 생각나지 않는다면
+            <br />
+            키워드 선택으로 질문을 입력해보세요.
           </span>
         </Title>
         <ButtonContainer>
@@ -124,48 +158,68 @@ const WriteQuestion = () => {
           onChange={handleQuestion}
         />
       </Wrapper>
-      <CompleteButton disabled={question === '' ? true : false}>
-        질문 작성 완료
-      </CompleteButton>
+      {doneClicked ? (
+        <CompleteButton disabled={question === '' ? true : false}>
+          질문 작성 완료
+        </CompleteButton>
+      ) : (
+        <DoneContainer>
+          <span>{count} / 50</span>
+          <button type="button" onClick={handleDoneClick}>
+            완료
+          </button>
+        </DoneContainer>
+      )}
     </StyledQuestionContainer>
   );
 };
 
-const StyledQuestionContainer = styled.div`
-  margin-top: 60px;
-  width: 375px;
-  height: 812px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const StyledQuestionContainer = styled.form`
+  @media (max-width: 480px) {
+    margin-top: 60px;
+    width: 375px;
+    height: 812px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
 `;
 
 const WriteIcon = styled.svg`
-  width: 32px;
-  height: 32px;
-  margin-bottom: 24px;
+  width: 20rem;
+  height: 2rem;
+  margin-top: 3.3rem;
+  margin-bottom: 1.25rem;
+  margin-right: 1.5rem;
+  gap: 1.25rem;
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 327px;
+  width: 20.4rem;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 2.5rem;
 `;
 
 const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  span:nth-child(1),
-  span:nth-child(2) {
+  gap: 0.75rem;
+  span:nth-child(1) {
     font-weight: bold;
   }
   span:nth-child(2) {
     color: #939394;
+    line-height: 20px;
+    font-weight: 500;
   }
 `;
 
@@ -178,7 +232,7 @@ const ButtonContainer = styled.div`
 const Button = styled.button`
   display: flex;
   height: 28px;
-  padding: 8px 12px;
+  padding: 8px 0.75rem;
   justify-content: center;
   align-items: center;
   border: none;
@@ -195,9 +249,9 @@ const Button = styled.button`
 
 const CompleteButton = styled.button`
   display: flex;
-  width: 375px;
-  height: 48px;
-  padding: 8px 24px;
+  width: 23.4rem;
+  height: 3rem;
+  padding: 0.5rem 1.5rem;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -217,21 +271,37 @@ const CompleteButton = styled.button`
 `;
 
 const PlaceHolder = styled.textarea`
-  text-align: center;
+  text-align: left;
   font:
-    normal 500 16px / normal 'Pretendard',
+    normal 500 1rem / normal 'Pretendard',
     sans-serif;
   border: none;
-  margin-bottom: 453px;
+  margin-bottom: 23rem;
   &::placeholder {
-    padding-right: 15px;
+    padding-right: 1rem;
   }
   resize: none;
   width: 100%;
-  min-height: 100px;
+  min-height: 6.25rem;
   overflow: hidden;
   outline: none;
-  border: 1px solid #58a3b3;
+`;
+
+const DoneContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span,
+  button {
+    font-weight: bold;
+  }
+  button {
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+  }
 `;
 
 export default WriteQuestion;
