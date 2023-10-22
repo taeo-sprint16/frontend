@@ -94,7 +94,12 @@ const QuestionConfirmPage = () => {
           <SkeletonUi />
         ) : (
           myAnsersResponse?.data.answers.slice(12).map((answer) => (
-            <li className="answersList__item" key={answer.createdAt}>
+            // eslint-disable-next-line
+            <li
+              className="answersList__item"
+              key={answer.createdAt}
+              onClick={() => handleClickSpecificAnswer(answer)}
+            >
               <div>
                 <h3 className="answersList__item--answer">{answer.answer}</h3>
                 <p className="answersList__item--createdAt">
@@ -102,10 +107,7 @@ const QuestionConfirmPage = () => {
                 </p>
               </div>
 
-              <button
-                className="modalButton"
-                onClick={() => handleClickSpecificAnswer(answer)}
-              >
+              <button className="modalButton">
                 <img src="/modalButton.svg" alt="상세모달창 띄우는 버튼" />
               </button>
             </li>
@@ -199,6 +201,7 @@ const StyledQuestionConfirmContainer = styled.div`
       border-radius: 16px;
       padding: 16px 8px 16px 16px;
       gap: 8px;
+      cursor: pointer;
 
       background-color: rgba(245, 249, 255, 1);
       display: flex;
@@ -220,7 +223,6 @@ const StyledQuestionConfirmContainer = styled.div`
       .modalButton {
         background: none;
         border: none;
-        cursor: pointer;
       }
     }
   }
