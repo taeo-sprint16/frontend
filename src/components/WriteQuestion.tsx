@@ -149,22 +149,26 @@ const WriteQuestion = () => {
           </span>
         </Title>
         <ButtonContainer>
-          <Button onClick={handleSelect} type="button" active={activeButton === '장점'}>
+          <Button onClick={handleSelect} type="button" $active={activeButton === '장점'}>
             장점
           </Button>
-          <Button onClick={handleSelect} type="button" active={activeButton === '단점'}>
+          <Button onClick={handleSelect} type="button" $active={activeButton === '단점'}>
             단점
           </Button>
-          <Button onClick={handleSelect} type="button" active={activeButton === '첫인상'}>
+          <Button
+            onClick={handleSelect}
+            type="button"
+            $active={activeButton === '첫인상'}
+          >
             첫인상
           </Button>
-          <Button onClick={handleSelect} type="button" active={activeButton === '성격'}>
+          <Button onClick={handleSelect} type="button" $active={activeButton === '성격'}>
             성격
           </Button>
           <Button
             onClick={handleSelect}
             type="button"
-            active={activeButton === '의사소통'}
+            $active={activeButton === '의사소통'}
           >
             의사소통
           </Button>
@@ -250,7 +254,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const Button = styled.button<{ active: boolean }>`
+const Button = styled.button<{ $active: boolean }>`
   display: flex;
   height: 1.75rem;
   padding: 0.5rem 0.5rem;
@@ -260,7 +264,7 @@ const Button = styled.button<{ active: boolean }>`
   font-weight: 600;
   color: #939394;
   border-radius: 1rem;
-  background: ${(props) => (props.active ? '#7aa3e9' : '#f4f5f9')};
+  background: ${(props) => (props.$active ? '#7aa3e9' : '#f4f5f9')};
   cursor: pointer;
   &:focus {
     background: #7aa3e9;
