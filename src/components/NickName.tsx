@@ -15,6 +15,7 @@ const NickName = () => {
   const handleComplete = () => {
     navigate('/write-question');
   };
+
   return (
     <StyledQuestionContainer>
       <UserIcon>
@@ -97,12 +98,13 @@ const NickName = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  width: 23rem;
+  width: 20.4rem;
   height: 100vh;
   background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
 `;
 
 const UserIcon = styled.svg`
@@ -140,26 +142,29 @@ const Title = styled.div`
   }
   span:nth-child(2) {
     color: #939394;
-    font-size: 0.875rem;
-    font-family: Pretendard;
-    font-size: 0.875rem;
-    font-style: normal;
-    font-weight: 500;
+    font: normal 500 0.875rem / normal 'Pretendard';
     line-height: 1.25rem;
+    margin-bottom: 2rem;
   }
 `;
 
 const PlaceHolder = styled.input`
   text-align: left;
-  font:
-    500 16px 'Pretendard',
-    sans-serif;
-  line-height: 20px;
+  font: normal 500 1rem / normal 'Pretendard';
+
   border: none;
-  margin-bottom: 453px;
+  margin-bottom: 28rem;
   &::placeholder {
-    padding-right: 15px;
+    padding-right: 1rem;
   }
+
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+
+  overflow: hidden;
+  outline: none;
+  border: 1px solid #58a3b3;
 `;
 
 const CompleteButton = styled.button`
