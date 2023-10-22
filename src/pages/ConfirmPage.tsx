@@ -16,7 +16,7 @@ const ConfirmPage = () => {
   const handleCodeConfirm = async () => {
     const res = await axios({
       method: 'POST',
-      url: BASE_URL + '/api/content/confirm',
+      url: BASE_URL + '/api/content/verify',
       headers: {
         'Content-Type': 'application/json',
       },
