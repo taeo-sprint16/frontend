@@ -22,7 +22,7 @@ const WriteQuestion = () => {
       장점: '내 장점에 대한 질문을 적어보세요.',
       단점: '내 단점에 대한 질문을 적어보세요.',
       첫인상: '제 첫인상은 어떤가요?',
-      성격: '제 성격은 어떤가요??',
+      성격: '제 성격은 어떤가요?',
     };
 
     const placeholderText = placeholderItem[word] || '질문';
@@ -124,7 +124,9 @@ const WriteQuestion = () => {
           onChange={handleQuestion}
         />
       </Wrapper>
-      <CompleteButton>질문 작성 완료</CompleteButton>
+      <CompleteButton disabled={question === '' ? true : false}>
+        질문 작성 완료
+      </CompleteButton>
     </StyledQuestionContainer>
   );
 };
@@ -207,6 +209,10 @@ const CompleteButton = styled.button`
   font-weight: 700;
   &:hover {
     background: #7aa3e9;
+  }
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
   }
 `;
 
