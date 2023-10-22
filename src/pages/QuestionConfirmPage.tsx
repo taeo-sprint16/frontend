@@ -53,11 +53,19 @@ const QuestionConfirmPage = () => {
   };
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpenCopyMessage, setIsOpenCopyMessage] = useState(false);
   const [clickedAnswer, setClickedAnswer] = useState<Answer | null>();
 
   const handleClickSpecificAnswer = (answer: Answer) => {
     setIsOpen(true);
     setClickedAnswer(answer);
+  };
+
+  const popCopyMessage = () => {
+    setIsOpenCopyMessage(true);
+    setTimeout(() => {
+      setIsOpenCopyMessage(false);
+    }, 1500);
   };
 
   return (
@@ -70,16 +78,15 @@ const QuestionConfirmPage = () => {
         <img src="/aiIcon.svg" alt="AI 아이콘" />
         {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
         <p className="header__aiAnalyzeText">
-          {/* TODO:  AI TEXT 최대 50자 전달해야됨*/}
           {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ?? 'Loading...'}
         </p>
       </div>
       <ul className="answersList">
-        {/* 11부터 slice한 이유 mockData의 답변 값들이 10번까지 다 비어있음 */}
+        {/* 12부터 slice한 이유 mockData의 답변 값들이 11번까지 다 비어있음 */}
         {isLoading ? (
           <SkeletonUi />
         ) : (
-          myAnsersResponse?.data.answers.slice(11).map((answer) => (
+          myAnsersResponse?.data.answers.slice(12).map((answer) => (
             <li className="answersList__item" key={answer.createdAt}>
               <div>
                 <h3 className="answersList__item--answer">{answer.answer}</h3>
@@ -104,12 +111,17 @@ const QuestionConfirmPage = () => {
           질문 추가하기
         </button>
         <button
-          onClick={() => handleShareCodeCopy('7716N2EK')}
+          onClick={() => {
+            handleShareCodeCopy('7716N2EK');
+            popCopyMessage();
+          }}
           className="question__shareButton"
         >
           질문 공유하기
         </button>
       </div>
+
+      {isOpenCopyMessage && <img src="/copyToast.svg" alt="복사 완료 토스트 메시지" />}
 
       {isOpen && clickedAnswer && (
         <Modal onClose={() => setIsOpen(false)}>
