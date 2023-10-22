@@ -99,6 +99,9 @@ const StyledQuestionContainer = styled.div`
   width: 375px;
   height: 812px;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const UserIcon = styled.svg`
