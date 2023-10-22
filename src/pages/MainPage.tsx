@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 interface SliderUlProps {
   current: number;
+  slidewidth: number;
 }
 
 const MainPage = () => {
@@ -31,10 +32,28 @@ const MainPage = () => {
     setMouseDownClientX(e.clientX);
     setMouseDownClientY(e.clientY);
   };
+
   const onMouseUp = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     setMouseUpClientX(e.clientX);
     setMouseUpClientY(e.clientY);
   };
+
+  const [slideWidth, setSlideWidht] = useState(window.innerWidth);
+
+  const handleResize = () => {
+    setSlideWidht(window.innerWidth);
+  };
+
+  const handleDotClick = (slideIndex: number) => {
+    setCurrentSlide(slideIndex);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const dragSpaceX = Math.abs(mouseDownClientX - mouseUpClientX);
@@ -58,50 +77,55 @@ const MainPage = () => {
     }
   }, [mouseUpClientX]);
 
-  const handleDotClick = (slideIndex: number) => {
-    setCurrentSlide(slideIndex);
-  };
-
   return (
     <StyeldContainer className="onboarding">
-      <SliderUl onMouseDown={onMouseDown} onMouseUp={onMouseUp} current={currentSlide}>
-        <SliderLi>
-          <img
-            draggable="false"
-            src={ReCloudVariableImgUrl}
-            alt="질문 보내기에 대한 설명 아이콘입니다"
-          />
-          <SliderTitle>질문 보내기에 대한 설명</SliderTitle>
-          <SliderDescription>질문 보내기에 대한 부설명 적기</SliderDescription>
-        </SliderLi>
-        <SliderLi>
-          <img
-            draggable="false"
-            src={ReCloudVariableImgUrl2}
-            alt="링크 전달 답변 받기에 대한 설명 아이콘입니다"
-          />
-          <SliderTitle>링크 전달 답변 받기에 대한 설명</SliderTitle>
-          <SliderDescription>링크 전달 답변 받기에 대한 설명 적기</SliderDescription>
-        </SliderLi>
-        <SliderLi>
-          <img
-            draggable="false"
-            src={ReCloudVariableImgUrl3}
-            alt="받은 답변으로 생각 기록 설명"
-          />
-          <SliderTitle>받은 답변으로 생각 기록 설명</SliderTitle>
-          <SliderDescription>받은 답변으로 생각 기록에 대한 설명 적기</SliderDescription>
-        </SliderLi>
-      </SliderUl>
-      <NavDots>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <Dot
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={currentSlide === index ? 'active' : ''}
-          />
-        ))}
-      </NavDots>
+      <div>
+        <SliderUl
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          current={currentSlide}
+          slidewidth={slideWidth}
+        >
+          <SliderLi>
+            <img
+              draggable="false"
+              src={ReCloudVariableImgUrl}
+              alt="질문 보내기에 대한 설명 아이콘입니다"
+            />
+            <SliderTitle>질문 보내기에 대한 설명</SliderTitle>
+            <SliderDescription>질문 보내기에 대한 부설명 적기</SliderDescription>
+          </SliderLi>
+          <SliderLi>
+            <img
+              draggable="false"
+              src={ReCloudVariableImgUrl2}
+              alt="링크 전달 답변 받기에 대한 설명 아이콘입니다"
+            />
+            <SliderTitle>링크 전달 답변 받기에 대한 설명</SliderTitle>
+            <SliderDescription>링크 전달 답변 받기에 대한 설명 적기</SliderDescription>
+          </SliderLi>
+          <SliderLi>
+            <img
+              draggable="false"
+              src={ReCloudVariableImgUrl3}
+              alt="받은 답변으로 생각 기록 설명"
+            />
+            <SliderTitle>받은 답변으로 생각 기록 설명</SliderTitle>
+            <SliderDescription>
+              받은 답변으로 생각 기록에 대한 설명 적기
+            </SliderDescription>
+          </SliderLi>
+        </SliderUl>
+        <NavDots>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Dot
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className={currentSlide === index ? 'active' : ''}
+            />
+          ))}
+        </NavDots>
+      </div>
       <ButtonContainer>
         <RouteLink to="/question">
           <ButtonText>질문 작성하기</ButtonText>
@@ -116,28 +140,35 @@ const MainPage = () => {
 
 export default MainPage;
 const StyeldContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  min-width: 375px;
+  height: 100vh;
   padding-top: 178px;
   background: var(--6, linear-gradient(0deg, #f0f4f8 0%, #eaf1ff 34.9%, #a7bfe8 93.75%));
   text-align: center;
-  width: 375px;
-  height: 812px;
-  overflow: hidden;
   font-family: 'Pretendard', sans-serif;
 `;
+
 const SliderUl = styled.ul<SliderUlProps>`
   display: flex;
+  width: 300%;
   padding: 0px;
   margin: 0px;
-  list-style-type: none;
   transition: transform 0.5s;
-  ${(props) => `
-    transform: translateX(-${props.current * 375}px);
-  `}
+  ${({ current, slidewidth }) =>
+    slidewidth > 475
+      ? `transform: translateX(-${current * 475}px);`
+      : slidewidth > 375
+      ? `transform: translateX(-${current * slidewidth}px);`
+      : `transform: translateX(-${current * 375}px);`}
 `;
 
 const SliderLi = styled.li`
-  width: 375px;
-  padding: 0px 47.5px 0px 47.5px;
+  display: block;
+  width: 100%;
 `;
 const SliderTitle = styled.h2`
   margin: 0px;
@@ -165,7 +196,9 @@ const NavDots = styled.div`
   margin-top: 16px;
 `;
 
-const Dot = styled.span`
+const Dot = styled.button`
+  padding: 0;
+  border: none;
   width: 10px;
   height: 10px;
   margin: 0 5px;
@@ -180,6 +213,8 @@ const Dot = styled.span`
 `;
 
 const ButtonContainer = styled.div`
+  width: 100%;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
