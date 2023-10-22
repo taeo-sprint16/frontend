@@ -7,8 +7,18 @@ const color = {
   white: '#fff',
 };
 
+const hover = {
+  primary100: {
+    'background-color': '#6584B7',
+  },
+  secondary100: {
+    'background-color': '#C2D6FA',
+  },
+};
+
 const theme = {
   color,
+  hover,
   maxWidth: '480px',
   background: 'linear-gradient(0deg, #f0f4f8 0%, #eaf1ff 34.9%, #a7bfe8 93.75%)',
 };
