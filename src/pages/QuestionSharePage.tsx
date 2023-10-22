@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import Title from '../components/Title';
 import TosatMessage from '../components/Toast/TosatMessage';
-import useClipboard from '../hooks/useClipboard';
 import useKakaoShare from '../hooks/useKakaoShare';
+import { clipboardText } from '../utils/clipboardWrite';
 
 const QuestionSharePage = () => {
   const navigate = useNavigate();
@@ -14,14 +14,7 @@ const QuestionSharePage = () => {
   const confirmCode = searchParams.get('confirmCode');
   const shareCode = searchParams.get('shareCode');
 
-  // console.log(confirmCode, shareCode);
-
-  // if (!confirmCode && !shareCode) {
-  //   navigate('/');
-  // }
-
   const { confirmMessage } = useKakaoShare();
-  const { handleShareCodeCopy } = useClipboard();
   const [isShow, setIsShow] = useState<boolean>(false);
   const [type, setType] = useState<'link' | 'kakao' | undefined>();
 
@@ -35,7 +28,7 @@ const QuestionSharePage = () => {
 
   const handleShareCode = (type: 'link' | 'kakao') => {
     if (type === 'link') {
-      handleShareCodeCopy(String(shareCode));
+      clipboardText(String(shareCode));
     } else if (type === 'kakao') {
       confirmMessage(String(confirmCode));
     }
