@@ -191,7 +191,7 @@ const StyledQuestionConfirmContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 486px;
+    height: 55vh;
     overflow-y: scroll;
     padding: 0 24px;
 
@@ -232,6 +232,8 @@ const StyledQuestionConfirmContainer = styled.div`
     justify-content: space-between;
     gap: 8px;
     padding: 0 24px;
+    position: absolute;
+    bottom: 30px;
 
     .question__addButton,
     .question__shareButton {
