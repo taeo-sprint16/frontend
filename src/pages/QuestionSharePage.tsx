@@ -1,19 +1,39 @@
-import { useNavigate } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
+import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import Button from '../components/Button';
 import Title from '../components/Title';
-import Toast from '../components/Toast';
-import useClipboard from '../hooks/useClipboard';
+import TosatMessage from '../components/Toast/TosatMessage';
 import useKakaoShare from '../hooks/useKakaoShare';
+import { clipboardText } from '../utils/clipboardWrite';
 
 const QuestionSharePage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const confirmCode = searchParams.get('confirmCode');
+  const shareCode = searchParams.get('shareCode');
+
   const { confirmMessage } = useKakaoShare();
-  const { handleShareCodeCopy, isOpen } = useClipboard();
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [type, setType] = useState<'link' | 'kakao' | undefined>();
 
   const handleMoveHome = () => {
     navigate('/');
+  };
+
+  const handleShowMessage = (show: boolean) => {
+    setIsShow(show);
+  };
+
+  const handleShareCode = (type: 'link' | 'kakao') => {
+    if (type === 'link') {
+      clipboardText(String(shareCode));
+    } else if (type === 'kakao') {
+      confirmMessage(String(confirmCode));
+    }
+    setType(type);
+    handleShowMessage(true);
   };
 
   return (
@@ -27,16 +47,14 @@ const QuestionSharePage = () => {
       </Title>
       <img src="/logo.svg" alt="로고 이미지" />
       <StyledBottomBox>
-        <Button color="primary" onClick={() => handleShareCodeCopy('7716N2EK')}>
+        <Button color="primary" onClick={() => handleShareCode('link')}>
           질문 공유하기
         </Button>
-        <Button color="disabled" onClick={() => confirmMessage('UUID/123456')}>
+        <Button color="disabled" onClick={() => handleShareCode('kakao')}>
           확인 코드
         </Button>
 
-        <StyledToastMessage $isOpen={isOpen}>
-          <Toast />
-        </StyledToastMessage>
+        <TosatMessage type={type} show={isShow} handleShow={handleShowMessage} />
 
         <StyledText onClick={handleMoveHome}>새 질문 만들기</StyledText>
       </StyledBottomBox>
@@ -64,6 +82,7 @@ const StyledBottomBox = styled.div`
 
   bottom: 62px;
   left: 50%;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -72,42 +91,6 @@ const StyledBottomBox = styled.div`
   text-align: center;
 
   transform: translateX(-50%);
-`;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-20%);
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-    transform: translateY(-20%);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(20%);
-    display: none;
-  }
-`;
-
-const StyledToastMessage = styled.div<{ $isOpen: boolean }>`
-  position: absolute;
-
-  top: -44px;
-  width: 100%;
-
-  opacity: 0;
-
-  animation-name: ${({ $isOpen }) => ($isOpen ? fadeIn : fadeOut)};
-  animation-duration: 1.5s;
-  animation-fill-mode: forwards;
 `;
 
 const StyledText = styled.span`

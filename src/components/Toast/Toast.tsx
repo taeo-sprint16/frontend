@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
-const Toast = () => {
+interface Props {
+  text: string;
+  icon: string;
+}
+
+const Toast = ({ text, icon }: Props) => {
   return (
     <StyledToast>
-      <img src="/icons/link.svg" alt="링크 아이콘" />
-      질문 링크가 복사됐어요
+      <img src={`/icons/${icon}`} alt="링크 아이콘" />
+      {text}
     </StyledToast>
   );
 };
@@ -24,8 +29,10 @@ const StyledToast = styled.span`
   justify-content: center;
   gap: 4px;
 
-  border: 1px solid ${({ theme }) => theme.color.gray300};
+  border: 1px solid ${({ theme }) => theme.color.gray400};
   border-radius: 20px;
+
+  background-color: ${({ theme }) => theme.color.white};
 
   color: ${({ theme }) => theme.color.gray200};
   font-size: 14px;
