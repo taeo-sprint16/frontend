@@ -124,7 +124,7 @@ const QuestionConfirmPage = () => {
           }}
           className="question__shareButton"
         >
-          질문 공유하기
+          <span style={{ fontWeight: 700, fontSize: '16px' }}>질문 공유하기</span>
         </button>
       </div>
 
@@ -233,6 +233,7 @@ const StyledQuestionConfirmContainer = styled.div`
     .question__shareButton {
       width: 159px;
       height: 48px;
+      font-weight: 700;
       border-radius: 24px;
       padding: 8px;
       border: none;
@@ -247,6 +248,10 @@ const StyledQuestionConfirmContainer = styled.div`
     .question__shareButton {
       background-color: rgba(131, 163, 216, 1);
       color: rgba(255, 255, 255, 1);
+    }
+
+    .question__shareButton:hover {
+      background-color: rgba(101, 132, 183, 1);
     }
   }
 
