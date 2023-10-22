@@ -89,15 +89,12 @@ const StyledBottomBox = styled.div`
   padding: 0 24px;
 
   bottom: 62px;
-  left: 50%;
 
   display: flex;
   flex-direction: column;
   gap: 8px;
 
   text-align: center;
-
-  transform: translateX(-50%);
 `;
 
 const StyledInput = styled.input`

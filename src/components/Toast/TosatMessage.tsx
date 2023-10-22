@@ -74,8 +74,8 @@ const fadeOut = keyframes`
 const StyledToastMessage = styled.div<{ $isOpen: boolean }>`
   position: absolute;
 
+  width: calc(100% - 48px);
   top: -44px;
-  width: 100%;
 
   opacity: 0;
 

@@ -47,10 +47,14 @@ const QuestionSharePage = () => {
       </Title>
       <img src="/logo.svg" alt="로고 이미지" />
       <StyledBottomBox>
-        <Button color="primary" onClick={() => handleShareCode('link')}>
+        <Button color="primary100" onClick={() => handleShareCode('link')}>
           질문 공유하기
         </Button>
-        <Button color="disabled" onClick={() => handleShareCode('kakao')}>
+        <Button
+          color="secondary100"
+          textColor="primary100"
+          onClick={() => handleShareCode('kakao')}
+        >
           확인 코드
         </Button>
 
@@ -80,17 +84,16 @@ const StyledContainer = styled.div`
 const StyledBottomBox = styled.div`
   position: absolute;
 
-  bottom: 62px;
-  left: 50%;
   width: 100%;
+  padding: 0 24px;
+
+  bottom: 62px;
 
   display: flex;
   flex-direction: column;
   gap: 8px;
 
   text-align: center;
-
-  transform: translateX(-50%);
 `;
 
 const StyledText = styled.span`
@@ -98,7 +101,11 @@ const StyledText = styled.span`
 
   margin-top: 8px;
 
-  color: ${({ theme }) => theme.color.gray100};
+  color: ${({ theme }) => theme.color.gray200};
   font-size: 14px;
   font-weight: 600;
+
+  &:hover {
+    color: ${({ theme }) => theme.color.gray100};
+  }
 `;

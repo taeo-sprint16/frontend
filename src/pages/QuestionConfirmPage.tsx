@@ -6,10 +6,8 @@ import axiosInstance from '../apis/createAxiosRequestInstance';
 import LoadingDots from '../components/Loading/LoadingDots';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 import Modal from '../components/Modal/Modal';
-
 import CustomSuspense from '../components/Suspense/CustomSuspense';
-import useClipboard from '../hooks/useClipboard';
-
+import { clipboardText } from '../utils/clipboardWrite';
 import { getCreatedYMD } from '../utils/getCreatedYMD';
 // import { useParams } from 'react-router-dom';
 
@@ -135,7 +133,7 @@ const QuestionConfirmPage = () => {
           </button>
           <button
             onClick={() => {
-              handleShareCodeCopy('7716N2EK');
+              clipboardText('7716N2EK');
               popCopyMessage();
             }}
             className="question__shareButton"
@@ -147,7 +145,7 @@ const QuestionConfirmPage = () => {
         {isOpenCopyMessage && (
           <img className="copyToast" src="/copyToast.svg" alt="복사 완료 토스트 메시지" />
         )}
-        
+
         {isOpen && clickedAnswer && (
           <Modal onClose={() => setIsOpen(false)}>
             <div className="modal__wrapper">
