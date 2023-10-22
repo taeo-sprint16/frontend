@@ -59,18 +59,27 @@ const WriteQuestion = () => {
 
   const handleCompleteQuestion = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const res = await axios({
-      method: 'POST',
-      url: import.meta.env.VITE_BASE_URL + '/api/content/create',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: JSON.stringify({
-        nickname: nickName,
-        question,
-      }),
-    });
-    navigate(`/share?confirmCode${res.data.confirmCode}&shareCode=${res.data.shareCode}`);
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: import.meta.env.VITE_BASE_URL + '/api/content/create',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({
+          nickname: nickName,
+          question,
+        }),
+      });
+
+      const res = response.data;
+
+      navigate(
+        `/share?confirmCode=${res.data.confirmCode}&shareCode=${res.data.shareCode}`,
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -236,8 +245,9 @@ const Title = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  align-items: flex-start;
+  justify-content: flex-end;
   gap: 8px;
+  width: 100%;
 `;
 
 const Button = styled.button<{ active: boolean }>`
