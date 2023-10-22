@@ -71,16 +71,23 @@ const QuestionConfirmPage = () => {
   return (
     <StyledQuestionConfirmContainer>
       <div className="questionConfirm__header">
-        <img src="/questionIcon.svg" alt="질문 아이콘" />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/questionIcon.svg" alt="질문 아이콘" />
+          <span style={{ marginLeft: '8px' }}>내가 한 질문</span>
+        </div>
         <h1 className="header__question">
           &quot;{myAnsersResponse?.data.question ?? 'Loading...'}&quot;
         </h1>
-        <img src="/aiIcon.svg" alt="AI 아이콘" />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/aiIcon.svg" alt="AI 아이콘" />
+          <span style={{ marginLeft: '8px' }}>응답자 의견 요약</span>
+        </div>
         {/* strict mode로 인해, ai 한마디가 두 번 화면에 보여지는 에러 발생 */}
         <p className="header__aiAnalyzeText">
           {myAnsersResponse?.data.aiAnalyzeText.slice(0, 50) ?? 'Loading...'}
         </p>
       </div>
+
       <ul className="answersList">
         {/* 12부터 slice한 이유 mockData의 답변 값들이 11번까지 다 비어있음 */}
         {isLoading ? (
@@ -121,7 +128,9 @@ const QuestionConfirmPage = () => {
         </button>
       </div>
 
-      {isOpenCopyMessage && <img src="/copyToast.svg" alt="복사 완료 토스트 메시지" />}
+      {isOpenCopyMessage && (
+        <img className="copyToast" src="/copyToast.svg" alt="복사 완료 토스트 메시지" />
+      )}
 
       {isOpen && clickedAnswer && (
         <Modal onClose={() => setIsOpen(false)}>
@@ -146,6 +155,7 @@ const StyledQuestionConfirmContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 50px;
+  position: relative;
 
   .questionConfirm__header {
     background: linear-gradient(
@@ -156,19 +166,21 @@ const StyledQuestionConfirmContainer = styled.div`
       #c8dcff 131.87%
     );
 
-    padding: 16px;
     width: 375px;
-    height: 212px;
+    height: 232px;
     border-radius: 24px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 15px;
+    gap: 8px;
+    padding: 24px;
+    font-size: 16px;
+    font-weight: 700;
 
     .header__question,
     .header__aiAnalyzeText {
       font-size: 16px;
       line-height: 24px;
+      font-weight: 500;
     }
   }
 
@@ -176,16 +188,17 @@ const StyledQuestionConfirmContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 375px;
-    height: 420px;
+    width: 327px;
+    height: 486px;
     overflow-y: scroll;
     padding: 0;
 
     .answersList__item {
       width: 327px;
-      height: 62px;
+      height: 74px;
       border-radius: 16px;
-      padding-left: 16px;
+      padding: 16px 8px 16px 16px;
+      gap: 8px;
 
       background-color: rgba(245, 249, 255, 1);
       display: flex;
@@ -194,6 +207,8 @@ const StyledQuestionConfirmContainer = styled.div`
 
       .answersList__item--answer {
         font-size: 14px;
+        font-weight: 500;
+        color: rgba(50, 57, 95, 1);
       }
 
       .answersList__item--createdAt {
@@ -233,5 +248,12 @@ const StyledQuestionConfirmContainer = styled.div`
       background-color: rgba(131, 163, 216, 1);
       color: rgba(255, 255, 255, 1);
     }
+  }
+
+  .copyToast {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translate(-50%, 0%);
   }
 `;
