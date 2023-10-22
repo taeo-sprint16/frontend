@@ -166,7 +166,7 @@ const StyledQuestionConfirmContainer = styled.div`
       #c8dcff 131.87%
     );
 
-    width: 375px;
+    width: 100%;
     height: 232px;
     border-radius: 24px;
     display: flex;
@@ -188,13 +188,13 @@ const StyledQuestionConfirmContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 327px;
+    width: 100%;
     height: 486px;
     overflow-y: scroll;
-    padding: 0;
+    padding: 0 24px;
 
     .answersList__item {
-      width: 327px;
+      width: 100%;
       height: 74px;
       border-radius: 16px;
       padding: 16px 8px 16px 16px;
@@ -225,13 +225,15 @@ const StyledQuestionConfirmContainer = styled.div`
     }
   }
   .question__buttons {
-    width: 327px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    gap: 8px;
+    padding: 0 24px;
 
     .question__addButton,
     .question__shareButton {
-      width: 159px;
+      flex: 1;
       height: 48px;
       font-weight: 700;
       border-radius: 24px;
@@ -252,6 +254,10 @@ const StyledQuestionConfirmContainer = styled.div`
 
     .question__shareButton:hover {
       background-color: rgba(101, 132, 183, 1);
+    }
+
+    .question__addButton:hover {
+      background-color: rgba(194, 214, 250, 1);
     }
   }
 
