@@ -3,6 +3,10 @@ import { styled } from 'styled-components';
 
 type KeyWord = '장점' | '단점' | '첫인상' | '성격';
 
+interface PlaceHolderProps {
+  [key: string]: string;
+}
+
 const WriteQuestion = () => {
   const [question, setQuestion] = useState('');
 
@@ -14,25 +18,14 @@ const WriteQuestion = () => {
   };
 
   const updatePlaceHodler = (word: string) => {
-    let placeholderText = '';
-    switch (word) {
-      case '장점':
-        placeholderText = '내 장점에 대한 질문을 적어보세요.';
-        break;
-      case '단점':
-        placeholderText = '내 단점에 대한 질문을 적어보세요.';
-        break;
-      case '첫인상':
-        placeholderText = '제 첫인상은 어떤가요?';
-        break;
-      case '성격':
-        placeholderText = '제 성격은 어떤가요??';
-        break;
-      default:
-        placeholderText = '질문을 입력하세요.';
-        break;
-    }
+    const placeholderItem: PlaceHolderProps = {
+      장점: '내 장점에 대한 질문을 적어보세요.',
+      단점: '내 단점에 대한 질문을 적어보세요.',
+      첫인상: '제 첫인상은 어떤가요?',
+      성격: '제 성격은 어떤가요??',
+    };
 
+    const placeholderText = placeholderItem[word] || '질문';
     setQuestion('');
     if (ref.current) ref.current.placeholder = placeholderText;
   };
@@ -141,6 +134,9 @@ const StyledQuestionContainer = styled.div`
   width: 375px;
   height: 812px;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const WriteIcon = styled.svg`
@@ -153,7 +149,7 @@ const Wrapper = styled.div`
   display: flex;
   width: 327px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 40px;
 `;
 
