@@ -1,15 +1,36 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import Title from '../components/Title';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const ConfirmPage = () => {
+  const navigate = useNavigate();
   const [inputText, setInputText] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-  const handleCodeConfirm = () => {
-    console.log(inputText);
+  const handleCodeConfirm = async () => {
+    const res = await axios({
+      method: 'POST',
+      url: BASE_URL + '/api/content/confirm',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        confirmCode: inputText,
+      }),
+    });
+
+    if (!res.data.success) {
+      alert(res.data.message);
+      return;
+    }
+
+    navigate(`/question/${inputText}`);
   };
 
   useEffect(() => {
