@@ -98,15 +98,14 @@ const NickName = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  @media (max-width: 480px) {
-    width: 20.4rem;
-    height: 100vh;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-  }
+  width: 20.4rem;
+  height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 24px;
 `;
 
 const UserIcon = styled.svg`
@@ -125,8 +124,7 @@ const UserIcon = styled.svg`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-self: stretch;
+  align-items: flex-start;
   gap: 1.25rem;
 `;
 
@@ -170,12 +168,14 @@ const CompleteButton = styled.button`
   position: absolute;
   bottom: 3.125rem;
   display: flex;
-  width: 23rem;
+  width: calc(100%-48px);
+  max-width: calc(480px - 48px);
+  left: 50%;
+  transform: translateX(-50%);
   height: 3rem;
   padding: 0.5rem 1.5rem;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
   border-radius: 1.5rem;
   background: #86aff4;
   color: white;

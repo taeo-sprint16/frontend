@@ -140,20 +140,24 @@ const WriteQuestion = () => {
           </span>
         </Title>
         <ButtonContainer>
-          <Button onClick={handleSelect} active={activeButton === '장점'}>
+          <Button onClick={handleSelect} type="button" active={activeButton === '장점'}>
             장점
           </Button>
-
-          <Button onClick={handleSelect} active={activeButton === '단점'}>
+          <Button onClick={handleSelect} type="button" active={activeButton === '단점'}>
             단점
           </Button>
-
-          <Button onClick={handleSelect} active={activeButton === '첫인상'}>
+          <Button onClick={handleSelect} type="button" active={activeButton === '첫인상'}>
             첫인상
           </Button>
-
-          <Button onClick={handleSelect} active={activeButton === '성격'}>
+          <Button onClick={handleSelect} type="button" active={activeButton === '성격'}>
             성격
+          </Button>
+          <Button
+            onClick={handleSelect}
+            type="button"
+            active={activeButton === '의사소통'}
+          >
+            의사소통
           </Button>
         </ButtonContainer>
         <PlaceHolder
@@ -183,16 +187,15 @@ const WriteQuestion = () => {
 };
 
 const StyledQuestionContainer = styled.form`
-  @media (max-width: 480px) {
-    margin-top: 60px;
-    width: 375px;
-    height: 812px;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-  }
+  margin-top: 60px;
+  width: 375px;
+  height: 812px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 24px;
 `;
 
 const WriteIcon = styled.svg`
@@ -240,8 +243,8 @@ const ButtonContainer = styled.div`
 const Button = styled.button<{ active: boolean }>`
   display: flex;
   height: 1.75rem;
-  padding: 0.5rem 0.75rem;
-  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  justify-content: space-between;
   align-items: center;
   border: none;
   font-weight: 600;
@@ -293,6 +296,7 @@ const PlaceHolder = styled.textarea`
   min-height: 6.25rem;
   overflow: hidden;
   outline: none;
+  padding: 0 24px;
 `;
 
 const DoneContainer = styled.div`
