@@ -1,9 +1,11 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 
+import { nickNameState } from '../atom';
+
 const NickName = () => {
-  const [nickName, setNickName] = useState('');
+  const [nickName, setNickName] = useRecoilState(nickNameState);
   const navigate = useNavigate();
 
   const handleNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,9 +97,8 @@ const NickName = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  margin-top: 60px;
-  width: 375px;
-  height: 812px;
+  width: 23rem;
+  height: 100vh;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -105,43 +106,46 @@ const StyledQuestionContainer = styled.div`
 `;
 
 const UserIcon = styled.svg`
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  margin-bottom: 24px;
+  width: 20rem;
+  height: 2rem;
+  margin-top: 3.3rem;
+  margin-bottom: 1.25rem;
+  margin-right: 1.5rem;
+  gap: 1.25rem;
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 327px;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 40px;
+  align-items: center;
+  align-self: stretch;
+  gap: 1.25rem;
 `;
 
 const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: 12px;
   span:nth-child(1),
   span:nth-child(2) {
     font-weight: bold;
   }
   span:nth-child(1) {
-    font:
-      normal 700 20px / normal 'Pretendard',
-      sans-serif;
-    text-transform: capitalize;
+    font-size: 1.25rem;
   }
   span:nth-child(2) {
     color: #939394;
+    font-size: 0.875rem;
     font-family: Pretendard;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px;
-    text-transform: capitalize;
+    line-height: 1.25rem;
   }
 `;
 
@@ -159,14 +163,16 @@ const PlaceHolder = styled.input`
 `;
 
 const CompleteButton = styled.button`
+  position: absolute;
+  bottom: 3.125rem;
   display: flex;
-  width: 375px;
-  height: 48px;
-  padding: 8px 24px;
+  width: 23rem;
+  height: 3rem;
+  padding: 0.5rem 1.5rem;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 24px;
+  border-radius: 1.5rem;
   background: #86aff4;
   color: white;
   border: none;
