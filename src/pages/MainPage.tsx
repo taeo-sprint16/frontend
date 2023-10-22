@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -22,20 +22,61 @@ const MainPage = () => {
 
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-  const handleButtonClick = (newSlide: number) => {
-    setCurrentSlide(newSlide);
+  const [mouseDownClientX, setMouseDownClientX] = useState(0);
+  const [mouseDownClientY, setMouseDownClientY] = useState(0);
+  const [mouseUpClientX, setMouseUpClientX] = useState(0);
+  const [mouseUpClientY, setMouseUpClientY] = useState(0);
+
+  const onMouseDown = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    setMouseDownClientX(e.clientX);
+    setMouseDownClientY(e.clientY);
+  };
+  const onMouseUp = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    setMouseUpClientX(e.clientX);
+    setMouseUpClientY(e.clientY);
+  };
+
+  useEffect(() => {
+    const dragSpaceX = Math.abs(mouseDownClientX - mouseUpClientX);
+    const dragSpaceY = Math.abs(mouseDownClientY - mouseUpClientY);
+    const vector = dragSpaceX / dragSpaceY;
+
+    if (mouseDownClientX !== 0 && dragSpaceX > 10 && vector > 2) {
+      if (mouseUpClientX < mouseDownClientX) {
+        if (currentSlide < 2) {
+          setCurrentSlide((prev) => prev + 1);
+        } else {
+          return;
+        }
+      } else if (mouseUpClientX > mouseDownClientX) {
+        if (currentSlide > 0) {
+          setCurrentSlide((prev) => prev - 1);
+        } else {
+          return;
+        }
+      }
+    }
+  }, [mouseUpClientX]);
+
+  const handleDotClick = (slideIndex: number) => {
+    setCurrentSlide(slideIndex);
   };
 
   return (
     <StyeldContainer className="onboarding">
-      <SliderUl current={currentSlide}>
+      <SliderUl onMouseDown={onMouseDown} onMouseUp={onMouseUp} current={currentSlide}>
         <SliderLi>
-          <img src={ReCloudVariableImgUrl} alt="질문 보내기에 대한 설명 아이콘입니다" />
+          <img
+            draggable="false"
+            src={ReCloudVariableImgUrl}
+            alt="질문 보내기에 대한 설명 아이콘입니다"
+          />
           <SliderTitle>질문 보내기에 대한 설명</SliderTitle>
           <SliderDescription>질문 보내기에 대한 부설명 적기</SliderDescription>
         </SliderLi>
         <SliderLi>
           <img
+            draggable="false"
             src={ReCloudVariableImgUrl2}
             alt="링크 전달 답변 받기에 대한 설명 아이콘입니다"
           />
@@ -43,22 +84,24 @@ const MainPage = () => {
           <SliderDescription>링크 전달 답변 받기에 대한 설명 적기</SliderDescription>
         </SliderLi>
         <SliderLi>
-          <img src={ReCloudVariableImgUrl3} alt="받은 답변으로 생각 기록 설명" />
+          <img
+            draggable="false"
+            src={ReCloudVariableImgUrl3}
+            alt="받은 답변으로 생각 기록 설명"
+          />
           <SliderTitle>받은 답변으로 생각 기록 설명</SliderTitle>
           <SliderDescription>받은 답변으로 생각 기록에 대한 설명 적기</SliderDescription>
         </SliderLi>
       </SliderUl>
-      <NavBox>
-        <NavButton onClick={() => handleButtonClick(0)}>
-          <NavSpan>질문 보내기 설명 슬라이드</NavSpan>
-        </NavButton>
-        <NavButton onClick={() => handleButtonClick(1)}>
-          <NavSpan>링크 전달 답변받기 슬라이드</NavSpan>
-        </NavButton>
-        <NavButton onClick={() => handleButtonClick(2)}>
-          <NavSpan>받은 답변으로 생각 기록 설명 슬라이드</NavSpan>
-        </NavButton>
-      </NavBox>
+      <NavDots>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <Dot
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className={currentSlide === index ? 'active' : ''}
+          />
+        ))}
+      </NavDots>
       <ButtonContainer>
         <RouteLink to="/question">
           <ButtonText>질문 작성하기</ButtonText>
@@ -115,31 +158,25 @@ const SliderDescription = styled.p`
   font-weight: 500;
   line-height: 20px;
 `;
-const NavBox = styled.div`
-  margin-top: 32px;
+
+const NavDots = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
+  margin-top: 16px;
 `;
-const NavButton = styled.button`
-  padding: 0;
-  margin: 0px 4px 0px 4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+
+const Dot = styled.span`
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
   background-color: var(--Gray400, #dbdbdc);
-  border: none;
-  &:focus {
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &.active {
     background-color: #86aff4;
-    outline: none;
   }
-`;
-const NavSpan = styled.span`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
 `;
 
 const ButtonContainer = styled.div`
