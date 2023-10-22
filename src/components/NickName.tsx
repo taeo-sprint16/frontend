@@ -113,7 +113,7 @@ const UserIcon = styled.svg`
   height: 2rem;
   margin-top: 3.3rem;
   margin-bottom: 1.25rem;
-  margin-right: 1.5rem;
+  margin-left: 1.5rem;
   gap: 1.25rem;
   svg {
     width: 2rem;
