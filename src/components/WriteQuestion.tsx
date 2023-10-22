@@ -218,7 +218,7 @@ const Title = styled.div`
   }
   span:nth-child(2) {
     color: #939394;
-    line-height: 20px;
+    line-height: 1.25rem;
     font-weight: 500;
   }
 `;
@@ -231,14 +231,14 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
   display: flex;
-  height: 28px;
-  padding: 8px 0.75rem;
+  height: 1.75rem;
+  padding: 0.5rem 0.75rem;
   justify-content: center;
   align-items: center;
   border: none;
   font-weight: 600;
   color: #939394;
-  border-radius: 16px;
+  border-radius: 1rem;
   background: #f4f5f9;
   cursor: pointer;
   &:focus {
@@ -255,7 +255,7 @@ const CompleteButton = styled.button`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 24px;
+  border-radius: 1.5rem;
   background: #86aff4;
   color: white;
   border: none;
