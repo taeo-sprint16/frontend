@@ -168,7 +168,7 @@ const CompleteButton = styled.button`
   position: absolute;
   bottom: 3.125rem;
   display: flex;
-  width: calc(100%-48px);
+  width: calc(100% - 48px);
   max-width: calc(480px - 48px);
   left: 50%;
   transform: translateX(-50%);
