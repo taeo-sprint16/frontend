@@ -76,7 +76,7 @@ const QuestionConfirmPage = () => {
           <span style={{ marginLeft: '8px' }}>내가 한 질문</span>
         </div>
         <h1 className="header__question">
-          &quot;{myAnsersResponse?.data.question ?? 'Loading...'}&quot;
+          {myAnsersResponse?.data.question ?? 'Loading...'}
         </h1>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img src="/aiIcon.svg" alt="AI 아이콘" />
@@ -169,7 +169,7 @@ const StyledQuestionConfirmContainer = styled.div`
     );
 
     width: 100%;
-    height: 232px;
+    height: auto;
     border-radius: 24px;
     display: flex;
     flex-direction: column;
