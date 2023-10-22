@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 const API_KEY: string = import.meta.env.VITE_KAKAO_API_KEY;
 
 const useKakaoShare = () => {
-  const confirmMessage = (confirmCode: string) => {
-    window.Kakao.Share.sendDefault({
+  const confirmMessage = async (confirmCode: string) => {
+    return await window.Kakao.Share.sendDefault({
       objectType: 'text',
       text: `${confirmCode}가 생성되었습니다.`,
       link: {
