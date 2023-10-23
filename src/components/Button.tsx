@@ -47,6 +47,7 @@ const StyleButton = styled.button<ButtonProps>`
   width: 100%;
   height: 48px;
 
+  font-weight: 700;
   white-space: nowrap;
 
   border: none;

@@ -38,22 +38,24 @@ const QuestionSharePage = () => {
 
   return (
     <StyledContainer>
-      <Title>
-        질문이 생성됐어요
+      <Title>질문이 생성됐어요!</Title>
+      <StyeldDescription>
+        ‘질문 공유하기’ 버튼을 눌러 질문을 공유해 주세요.
         <br />
-        아래 공유하기 버튼을 눌러
+        답변은 확인코드를 입력해야 확인할 수 있어요.
         <br />
-        링크를 복사하세요
-      </Title>
+        ‘확인코드 받기’ 후 반드시 코드를 기억해두세요!
+      </StyeldDescription>
       <img src="/logo.svg" alt="로고 이미지" />
       <StyledBottomBox>
-        <Button color="primary100" onClick={() => handleShareCode('link')}>
+        <Button color="primary100" onClick={() => handleShareCode('link')} hover>
           질문 공유하기
         </Button>
         <Button
           color="secondary100"
           textColor="primary100"
           onClick={() => handleShareCode('kakao')}
+          hover
         >
           확인 코드
         </Button>
@@ -72,7 +74,8 @@ const StyledContainer = styled.div`
   position: relative;
 
   padding-top: 141px;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   border: 1px solid lightgray;
 
@@ -81,13 +84,20 @@ const StyledContainer = styled.div`
   text-align: center;
 `;
 
+const StyeldDescription = styled.p`
+  color: ${({ theme }) => theme.color.gray200};
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+`;
+
 const StyledBottomBox = styled.div`
   position: absolute;
 
   width: 100%;
   padding: 0 24px;
 
-  bottom: 62px;
+  bottom: 48px;
 
   display: flex;
   flex-direction: column;
