@@ -119,6 +119,7 @@ const MainPage = () => {
         <NavDots>
           {Array.from({ length: 3 }).map((_, index) => (
             <Dot
+              aria-label="슬라이드 버튼"
               key={index}
               onClick={() => handleDotClick(index)}
               className={currentSlide === index ? 'active' : ''}
@@ -147,7 +148,7 @@ const StyeldContainer = styled.section`
   min-width: 375px;
   height: 100vh;
   padding-top: 178px;
-  background: var(--6, linear-gradient(0deg, #f0f4f8 0%, #eaf1ff 34.9%, #a7bfe8 93.75%));
+  background: ${({ theme }) => theme.background};
   text-align: center;
   font-family: 'Pretendard', sans-serif;
 `;
@@ -173,7 +174,7 @@ const SliderLi = styled.li`
 const SliderTitle = styled.h2`
   margin: 0px;
   margin-top: 48px;
-  color: var(--Gray100, #0f122e);
+  color: ${({ theme }) => theme.color.gray100};
   padding: 0px;
   font-size: 20px;
   font-style: normal;
@@ -183,7 +184,7 @@ const SliderTitle = styled.h2`
 `;
 const SliderDescription = styled.p`
   margin: 16px 0px 0px 0px;
-  color: var(--Gray300, #939394);
+  color: ${({ theme }) => theme.color.gray300};
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -202,13 +203,14 @@ const Dot = styled.button`
   width: 10px;
   height: 10px;
   margin: 0 5px;
-  background-color: var(--Gray400, #dbdbdc);
+  background-color: ${({ theme }) => theme.color.gray400};
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &.active {
     background-color: #86aff4;
+    outline: none;
   }
 `;
 
@@ -231,11 +233,11 @@ const RouteLink = styled(Link)`
   padding: 10px 36px;
   height: 48px;
   border-radius: 24px;
-  background-color: #a7bfe8;
+  background-color: ${({ theme }) => theme.color.primary100};
   border: none;
   cursor: pointer;
   &:focus {
-    background-color: #86aff4;
+    background-color: ${({ theme }) => theme.color.secondary200};
     outline: none;
   }
   text-decoration: none;
@@ -246,6 +248,5 @@ const ButtonText = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  text-transform: capitalize;
-  color: #fff;
+  color: ${({ theme }) => theme.color.white};
 `;
