@@ -217,7 +217,7 @@ const SliderDescription = styled.p`
   font-weight: 500;
   line-height: 24px;
   text-transform: capitalize;
-  white-space: pre-wrap;
+  white-space: pre-line;
 `;
 
 const NavDots = styled.div`
