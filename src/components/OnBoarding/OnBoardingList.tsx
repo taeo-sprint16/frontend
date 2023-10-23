@@ -14,7 +14,7 @@ const OnBoardingList = () => {
       img: new URL('../../assets/icons/ReCloud Variable.png', import.meta.url).href,
       title: "새로운 나를 발견하는 '어바웃 미'",
       description: '타인의 답변을 통해,\n본인에 대한 새로운 인사이트를 얻어보세요.',
-      alt: '질문 보내기에 대한 설명 아이콘입니다',
+      alt: '어바웃 미에 대한 설명 아이콘입니다.',
     },
     {
       id: 2,
@@ -22,14 +22,14 @@ const OnBoardingList = () => {
       title: '질문 공유하고 답변 받기',
       description:
         '본인에 대한 질문을 만들고\n사람들에게 공유하여 그들의 답변을 받아보세요.',
-      alt: '링크 전달 답변 받기에 대한 설명 아이콘입니다',
+      alt: '질문 공유하고 답변 받기에 대한 아이콘입니다.',
     },
     {
       id: 3,
       img: new URL('../../assets/icons/ReCloud Variable3.png', import.meta.url).href,
       title: '답변을 참고하여 나에 대해 정리하기',
       description: '답변을 참고하여 자신에 대해 정리하고\n기록하는 시간을 가져보세요.',
-      alt: '받은 답변으로 생각 기록 설명',
+      alt: '답변을 참고하여 나에 대해 정리하기에 대한 아이콘입니다.',
     },
   ];
 
