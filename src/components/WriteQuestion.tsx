@@ -14,9 +14,6 @@ interface PlaceHolderProps {
 
 const WriteQuestion = () => {
   const [question, setQuestion] = useState('');
-  const [count, setCount] = useState(0);
-  const [doneClicked, setDoneClicked] = useState(false);
-
   const [activeButton, setActiveButton] = useState('');
 
   const navigate = useNavigate();
@@ -28,11 +25,6 @@ const WriteQuestion = () => {
   const handleQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputText = event.target.value;
     setQuestion(inputText);
-    setCount(inputText.length);
-  };
-
-  const handleDoneClick = () => {
-    setDoneClicked(true);
   };
 
   const updatePlaceHodler = (word: string) => {
@@ -127,21 +119,12 @@ const WriteQuestion = () => {
           onChange={handleQuestion}
         />
       </Wrapper>
-      {doneClicked ? (
-        <CompleteButton
-          onClick={handleCompleteQuestion}
-          disabled={question === '' ? true : false}
-        >
-          질문 작성 완료
-        </CompleteButton>
-      ) : (
-        <DoneContainer>
-          <span>{count} / 50</span>
-          <button type="button" onClick={handleDoneClick}>
-            완료
-          </button>
-        </DoneContainer>
-      )}
+      <CompleteButton
+        onClick={handleCompleteQuestion}
+        disabled={question === '' ? true : false}
+      >
+        질문 작성 완료
+      </CompleteButton>
     </StyledQuestionContainer>
   );
 };
@@ -257,23 +240,6 @@ const PlaceHolder = styled.textarea`
   justify-content: flex-start;
   overflow: hidden;
   outline: none;
-`;
-
-const DoneContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  span,
-  button {
-    font-weight: bold;
-  }
-  button {
-    border: none;
-    outline: none;
-    background: transparent;
-    cursor: pointer;
-  }
 `;
 
 export default WriteQuestion;
