@@ -16,7 +16,7 @@ const ConfirmPage = () => {
   const handleCodeConfirm = async () => {
     const res = await axios({
       method: 'POST',
-      url: BASE_URL + '/api/content/confirm',
+      url: BASE_URL + '/api/content/verify',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -58,7 +58,12 @@ const ConfirmPage = () => {
           type="text"
           placeholder="확인코드를 입력해주세요."
         />
-        <Button color="primary100" disabled={isDisabled} onClick={handleCodeConfirm}>
+        <Button
+          color="primary100"
+          hover
+          disabled={isDisabled}
+          onClick={handleCodeConfirm}
+        >
           답변 확인하기
         </Button>
       </StyledBottomBox>
@@ -111,8 +116,13 @@ const StyledInput = styled.input`
   border: 1px solid ${({ theme }) => theme.color.gray300};
   border-radius: 24px;
 
-  &:focus::placeholder {
-    color: transparent;
+  &:focus {
+    color: ${({ theme }) => theme.color.gray100};
+    border-color: ${({ theme }) => theme.color.gray100};
+
+    &::placeholder {
+      color: transparent;
+    }
   }
 
   &::placeholder {
