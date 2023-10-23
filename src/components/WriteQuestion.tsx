@@ -83,10 +83,10 @@ const WriteQuestion = () => {
 
   return (
     <StyledQuestionContainer>
-      <WriteIcon>
-        <img src="/write-question.svg" alt="write-question" />
-      </WriteIcon>
       <Wrapper>
+        <WriteIcon>
+          <img src="/write-question.svg" alt="write-question" />
+        </WriteIcon>
         <Title>
           <span>나에 대해 알고 싶은 질문을 적어보세요.</span>
           <span>
@@ -147,9 +147,8 @@ const WriteQuestion = () => {
 };
 
 const StyledQuestionContainer = styled.form`
-  margin-top: 60px;
-  width: 375px;
-  height: 812px;
+  width: 20.4rem;
+  height: 100vh;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -162,8 +161,7 @@ const WriteIcon = styled.div`
   width: 20rem;
   height: 2rem;
   margin-top: 3.3rem;
-  margin-bottom: 1.25rem;
-  margin-left: 1.5rem;
+  margin-left: 2.5rem;
   gap: 1.25rem;
   img {
     width: 2rem;
@@ -173,10 +171,11 @@ const WriteIcon = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  width: 20.4rem;
+  width: 480px;
   flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.25rem;
+  padding: 0 24px;
 `;
 
 const Title = styled.div`
@@ -184,19 +183,24 @@ const Title = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
+  span {
+    gap: 12px;
+  }
   span:nth-child(1) {
     font-weight: bold;
+    margin-bottom: 0.75rem;
   }
   span:nth-child(2) {
     color: #939394;
     line-height: 1.25rem;
     font-weight: 500;
+    margin-bottom: 1.25rem;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 8px;
   width: 100%;
 `;
@@ -204,7 +208,6 @@ const ButtonContainer = styled.div`
 const Button = styled.button<{ $active: boolean }>`
   display: flex;
   height: 1.75rem;
-  padding: 0.5rem 0.5rem;
   justify-content: space-between;
   align-items: center;
   border: none;
@@ -244,20 +247,16 @@ const CompleteButton = styled.button`
 
 const PlaceHolder = styled.textarea`
   text-align: left;
-  font:
-    normal 500 1rem / normal 'Pretendard',
-    sans-serif;
+  font: normal 500 1rem / normal 'Pretendard';
   border: none;
-  margin-bottom: 23rem;
+  margin-bottom: 28rem;
   &::placeholder {
     padding-right: 1rem;
   }
-  resize: none;
-  width: 100%;
-  min-height: 6.25rem;
+  display: flex;
+  justify-content: flex-start;
   overflow: hidden;
   outline: none;
-  padding: 0 24px;
 `;
 
 const DoneContainer = styled.div`
