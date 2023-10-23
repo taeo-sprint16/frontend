@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import axiosInstance from '../apis/createAxiosRequestInstance';
 import AnswerCompletePage from '../components/Answer/AnswerCompletePage';
@@ -12,6 +13,7 @@ export type AnswerPageProps = {
   nickname: string | undefined;
   quesiton?: string | undefined;
   setStep: React.Dispatch<React.SetStateAction<AnswerPageStep>>;
+  shareCode?: string;
 };
 
 interface ResponseData {
@@ -24,16 +26,20 @@ interface ResponseData {
 }
 
 const AnswerPage = () => {
-  // const { shareCode } = useParams();
-  const mockShareCode = '7716N2EK';
+  const { shareCode } = useParams();
+  const router = useNavigate();
+  // const mockShareCode = '7716N2EK';
 
   const [questionShareData, setQuestionShareData] = useState<ResponseData>();
 
   useEffect(() => {
     fetchData()
       .then((responseData) => {
+        if (!responseData.data.success) {
+          router('/');
+          return;
+        }
         setQuestionShareData(responseData.data);
-        console.log(responseData.data);
       })
       .catch((error) => console.error('API 호출 오류 : ', error));
   }, []);
@@ -43,7 +49,7 @@ const AnswerPage = () => {
       method: 'post',
       url: 'api/content/share',
       data: {
-        shareCode: mockShareCode,
+        shareCode: shareCode,
       },
     });
     return data;
@@ -52,7 +58,7 @@ const AnswerPage = () => {
   const [step, setStep] = useState<AnswerPageStep>('cover');
 
   return (
-    <div>
+    <>
       {step === 'cover' && (
         <AnswerPageCover nickname={questionShareData?.data.nickname} setStep={setStep} />
       )}
@@ -62,11 +68,12 @@ const AnswerPage = () => {
           nickname={questionShareData?.data.nickname}
           quesiton={questionShareData?.data.question}
           setStep={setStep}
+          shareCode={shareCode}
         />
       )}
 
       {step === 'complete' && <AnswerCompletePage />}
-    </div>
+    </>
   );
 };
 

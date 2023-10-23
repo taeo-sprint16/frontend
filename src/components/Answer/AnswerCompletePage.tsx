@@ -32,19 +32,20 @@ const AnswerCompletePage = () => {
 export default AnswerCompletePage;
 
 const StyledAnswerPageCompleteContainer = styled.section`
-  height: 100vh;
+  height: 100%;
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
-  padding-top: 120px;
-  background: linear-gradient(360deg, #f0f4f8 0%, #eaf1ff 34.9%, #a7bfe8 93.75%);
+  padding-top: 20%;
+  background: ${({ theme }) => theme.background};
 
   .complete__title {
     font-size: 24px;
     line-height: 36px;
     font-weight: 700;
     text-align: center;
+    margin: 0;
     margin-bottom: 40px;
   }
 
@@ -56,18 +57,21 @@ const StyledAnswerPageCompleteContainer = styled.section`
 
   .complete__button--RouteToQuestion {
     position: absolute;
-    bottom: 40px;
-    background-color: rgba(131, 163, 216, 1);
+    bottom: 20px;
+    background-color: ${({ theme }) => theme.color.primary100};
     width: 90%;
     height: 48px;
     gap: 8px;
     border-radius: 24px;
     border: none;
-    color: white;
+    color: ${({ theme }) => theme.color.white};
     cursor: pointer;
+
+    font-weight: 700;
   }
 
   .complete__button--RouteToQuestion:hover {
-    background-color: rgba(101, 132, 183, 1);
+    ${({ theme }) => theme.hover.primary100};
+    /* background-color: rgba(101, 132, 183, 1); */
   }
 `;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import axiosInstance from '../apis/createAxiosRequestInstance';
@@ -24,12 +24,13 @@ interface ResponseData {
     question: string;
     aiAnalyzeText: string;
     answers: Answer[];
+    shareCode: string;
   };
 }
 
 const QuestionConfirmPage = () => {
-  // const { confirmCode } = useParams();
-  const mockConfirmCode = '5ADDTU09';
+  const { confirmCode } = useParams();
+  // const mockConfirmCode = '5ADDTU09';
   const [myAnsersResponse, setMyAnswersResponse] = useState<ResponseData>();
   const router = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +38,12 @@ const QuestionConfirmPage = () => {
   useEffect(() => {
     fetchMyAnswers()
       .then((responseData) => {
+        // 질문지 검증
+        if (!responseData.data.success) {
+          router('/confirm');
+          return;
+        }
+
         setMyAnswersResponse(responseData.data);
         setIsLoading(false);
       })
@@ -48,7 +55,7 @@ const QuestionConfirmPage = () => {
       method: 'post',
       url: 'api/content/confirm',
       data: {
-        confirmCode: mockConfirmCode,
+        confirmCode: confirmCode,
       },
     });
     return data;
@@ -95,7 +102,7 @@ const QuestionConfirmPage = () => {
             {isLoading && <LoadingDots />} */}
             {myAnsersResponse?.data.question}
           </h1>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}>
             <img src="/aiIcon.svg" alt="AI 아이콘" />
             <span style={{ marginLeft: '8px' }}>응답자 의견 요약</span>
           </div>
@@ -133,7 +140,7 @@ const QuestionConfirmPage = () => {
           </button>
           <button
             onClick={() => {
-              clipboardText('7716N2EK');
+              clipboardText(myAnsersResponse?.data?.shareCode ?? '7716N2EK');
               popCopyMessage();
             }}
             className="question__shareButton"
@@ -166,7 +173,7 @@ export default QuestionConfirmPage;
 const LoaderContainer = styled.div`
   width: 100%;
   max-width: 600px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -193,11 +200,11 @@ const LoaderContainer = styled.div`
 
 const StyledQuestionConfirmContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 24px;
   position: relative;
 
   .questionConfirm__header {
@@ -214,13 +221,14 @@ const StyledQuestionConfirmContainer = styled.div`
     border-radius: 24px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    /* gap: 8px; */
     padding: 24px;
     font-size: 16px;
     font-weight: 700;
 
     .header__question,
     .header__aiAnalyzeText {
+      margin: 12px 0 0;
       font-size: 16px;
       line-height: 24px;
       font-weight: 500;
@@ -234,7 +242,7 @@ const StyledQuestionConfirmContainer = styled.div`
     width: 100%;
     height: 42vh;
     overflow-y: scroll;
-    padding: 0 24px;
+    padding: 0 24px 80px;
 
     .answersList__item {
       width: 100%;
@@ -272,9 +280,11 @@ const StyledQuestionConfirmContainer = styled.div`
     display: flex;
     justify-content: space-between;
     gap: 8px;
-    padding: 0 24px;
+    padding: 16px 24px 20px;
     position: absolute;
-    bottom: 30px;
+    bottom: 0;
+
+    background-color: ${({ theme }) => theme.color.white};
 
     .question__addButton,
     .question__shareButton {
