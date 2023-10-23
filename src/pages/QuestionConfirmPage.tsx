@@ -113,7 +113,7 @@ const QuestionConfirmPage = () => {
         <ul className="answersList">
           {/* 12부터 slice한 이유 mockData의 답변 값들이 11번까지 다 비어있음 */}
 
-          {myAnsersResponse?.data.answers.slice(12).map((answer) => (
+          {myAnsersResponse?.data.answers.map((answer) => (
             // eslint-disable-next-line
             <li
               className="answersList__item"
