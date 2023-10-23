@@ -23,7 +23,7 @@ const SliderLi = styled.li`
 `;
 const SliderTitle = styled.h2`
   margin: 0px;
-  margin-top: 48px;
+  margin-top: 16px;
   color: ${({ theme }) => theme.color.gray100};
   padding: 0px;
   font-size: 20px;

@@ -100,7 +100,7 @@ const OnBoardingList = () => {
   }, [mouseUpClientX]);
 
   return (
-    <div>
+    <SliderBox>
       <SliderUl
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
@@ -123,11 +123,18 @@ const OnBoardingList = () => {
           />
         ))}
       </NavDots>
-    </div>
+    </SliderBox>
   );
 };
 
 export default OnBoardingList;
+
+const SliderBox = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+`;
 
 const SliderUl = styled.ul<SliderUlProps>`
   display: flex;
@@ -145,7 +152,7 @@ const SliderUl = styled.ul<SliderUlProps>`
 const NavDots = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 16px;
 `;
 
 const Dot = styled.button`

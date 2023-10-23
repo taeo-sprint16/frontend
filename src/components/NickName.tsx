@@ -41,12 +41,12 @@ const NickName = () => {
 };
 
 const StyledQuestionContainer = styled.div`
-  width: 20.4rem;
-  height: 100vh;
-  background: #fff;
+  width: 100%;
+  height: 100%;
+  background: ${({ theme }) => theme.color.white};
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   margin: 0 auto;
   padding: 0 24px;
 `;
@@ -56,7 +56,7 @@ const UserIcon = styled.div`
   height: 2rem;
   margin-top: 3.3rem;
   margin-bottom: 1.25rem;
-  margin-left: 1.5rem;
+  /* margin-left: 1.5rem; */
   gap: 1.25rem;
   img {
     width: 2rem;
@@ -68,7 +68,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.25rem;
+  /* gap: 1.25rem; */
 `;
 
 const Title = styled.div`
@@ -96,8 +96,14 @@ const PlaceHolder = styled.input`
   font: normal 500 1rem / normal 'Pretendard';
   border: none;
   margin-bottom: 28rem;
+
+  color: ${({ theme }) => theme.color.gray100};
+  font-weight: 500;
+  line-height: 24px;
+
   &::placeholder {
     padding-right: 1rem;
+    color: ${({ theme }) => theme.color.gray400};
   }
 
   display: flex;
@@ -109,7 +115,7 @@ const PlaceHolder = styled.input`
 
 const CompleteButton = styled.button`
   position: absolute;
-  bottom: 3.125rem;
+  bottom: 20px;
   display: flex;
   width: calc(100% - 48px);
   max-width: calc(480px - 48px);
@@ -120,13 +126,14 @@ const CompleteButton = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 1.5rem;
-  background: #86aff4;
+  background-color: ${({ theme }) => theme.color.primary100};
+
   color: white;
   border: none;
   cursor: pointer;
   font-weight: 700;
   &:hover {
-    background: #7aa3e9;
+    ${({ theme }) => theme.hover.primary100}
   }
   &:disabled {
     background: #ccc;

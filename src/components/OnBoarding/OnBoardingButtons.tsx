@@ -20,13 +20,14 @@ const OnBoardingButton = () => {
 
 export default OnBoardingButton;
 const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+
   width: 100%;
-  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 32px;
   gap: 8px;
 `;
 const RouteLink = styled(Link)<ButtonProps>`
