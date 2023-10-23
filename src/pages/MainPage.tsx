@@ -6,7 +6,9 @@ interface SliderUlProps {
   current: number;
   slidewidth: number;
 }
-
+interface ButtonProps {
+  name: string;
+}
 const MainPage = () => {
   const ReCloudVariableImgUrl = new URL(
     '../assets/icons/ReCloud Variable.png',
@@ -29,11 +31,11 @@ const MainPage = () => {
 
   const descriptions = [
     `타인의 답변을 통해,
-\n본인에 대한 새로운 인사이트를 얻어보세요`,
+본인에 대한 새로운 인사이트를 얻어보세요`,
     `본인에 대한 질문을 만들고
-    \n사람들에게 공유하여 그들의 답변을 받아보세요`,
+    사람들에게 공유하여 그들의 답변을 받아보세요`,
     `답변을 참고하여 자신에 대해 정리하고
-    \n기록하는 시간을 가져보세요`,
+    기록하는 시간을 가져보세요`,
   ];
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
@@ -152,10 +154,10 @@ const MainPage = () => {
         </NavDots>
       </div>
       <ButtonContainer>
-        <RouteLink to="/question">
-          <ButtonText>질문 작성하기</ButtonText>
+        <RouteLink to="/question" name="질문작성">
+          <ButtonText>질문 만들기</ButtonText>
         </RouteLink>
-        <RouteLink to="/confirm">
+        <RouteLink to="/confirm" name="답변확인">
           <ButtonText>답변 확인하기</ButtonText>
         </RouteLink>
       </ButtonContainer>
@@ -213,7 +215,7 @@ const SliderDescription = styled.p`
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 14px;
+  line-height: 24px;
   text-transform: capitalize;
   white-space: pre-wrap;
 `;
@@ -236,7 +238,7 @@ const Dot = styled.button`
   transition: background-color 0.2s;
 
   &.active {
-    background-color: #86aff4;
+    background-color: ${({ theme }) => theme.color.primary100};
     outline: none;
   }
 `;
@@ -251,7 +253,7 @@ const ButtonContainer = styled.div`
   margin-top: 32px;
   gap: 8px;
 `;
-const RouteLink = styled(Link)`
+const RouteLink = styled(Link)<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -259,15 +261,20 @@ const RouteLink = styled(Link)`
   margin: 0px 24px 0px 24px;
   padding: 10px 36px;
   height: 48px;
-  border-radius: 24px;
-  background-color: ${({ theme }) => theme.color.primary100};
   border: none;
+  border-radius: 24px;
+  background-color: ${({ theme, name }) =>
+    name === '질문작성' ? theme.color.primary100 : theme.color.secondary100};
+  color: ${({ theme, name }) =>
+    name === '질문작성' ? theme.color.white : theme.color.primary100};
+  text-decoration: none;
   cursor: pointer;
+  &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.color.secondary200};
+    background-color: ${({ theme, name }) =>
+      name === '질문작성' ? theme.color.secondary200 : theme.color.secondary300};
     outline: none;
   }
-  text-decoration: none;
 `;
 
 const ButtonText = styled.p`
@@ -275,5 +282,4 @@ const ButtonText = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  color: ${({ theme }) => theme.color.white};
 `;
