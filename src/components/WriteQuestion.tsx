@@ -163,20 +163,24 @@ const Wrapper = styled.div`
 const Title = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 0.75rem;
   span {
     gap: 12px;
   }
   span:nth-child(1) {
-    font-weight: bold;
     margin-bottom: 0.75rem;
+
+    font-size: 20px;
+
+    font-weight: 700;
+    line-height: 28px;
   }
   span:nth-child(2) {
     color: #939394;
     line-height: 1.25rem;
     font-weight: 500;
-    margin-bottom: 1.25rem;
+    font-size: 14px;
+    line-height: 20px;
   }
 `;
 
@@ -193,36 +197,44 @@ const Button = styled.button<{ $active: boolean }>`
   justify-content: space-between;
   align-items: center;
   border: none;
-  font-weight: 600;
   color: #939394;
   border-radius: 1rem;
   background: ${(props) => (props.$active ? '#7aa3e9' : '#f4f5f9')};
   cursor: pointer;
 
   white-space: nowrap;
+  padding: 8px 12px;
 
-  &:focus {
+  font-size: 14px;
+  font-weight: 600;
+
+  color: ${(props) => (props.$active ? '#f4f5f9' : '#939394')};
+  /* &:focus {
     background: #7aa3e9;
     color: #f4f5f9;
-  }
+  } */
 `;
 
 const CompleteButton = styled.button`
+  position: absolute;
+  bottom: 20px;
+
   display: flex;
-  width: 23.4rem;
+  width: calc(100% - 48px);
+  max-width: calc(480px - 48px);
   height: 3rem;
   padding: 0.5rem 1.5rem;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
   border-radius: 1.5rem;
-  background: #86aff4;
+  background-color: ${({ theme }) => theme.color.primary100};
   color: white;
   border: none;
   cursor: pointer;
   font-weight: 700;
   &:hover {
-    background: #7aa3e9;
+    ${({ theme }) => theme.hover.primary100};
   }
   &:disabled {
     background: #ccc;
