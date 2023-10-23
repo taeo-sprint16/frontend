@@ -7,14 +7,14 @@ import theme from './styles/theme';
 
 function App() {
   return (
-    <main>
+    <>
       <RecoilRoot>
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <Router />
         </ThemeProvider>
       </RecoilRoot>
-    </main>
+    </>
   );
 }
 

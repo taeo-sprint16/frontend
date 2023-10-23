@@ -77,7 +77,7 @@ export default QuestionSharePage;
 const StyledContainer = styled.div`
   position: relative;
 
-  padding-top: 141px;
+  padding-top: 20%;
   width: 100%;
   height: 100%;
 
@@ -101,7 +101,7 @@ const StyledBottomBox = styled.div`
   width: 100%;
   padding: 0 24px;
 
-  bottom: 48px;
+  bottom: 20px;
 
   display: flex;
   flex-direction: column;

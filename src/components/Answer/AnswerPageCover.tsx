@@ -28,28 +28,29 @@ const AnswerPageCover = ({ nickname, setStep }: AnswerPageProps) => {
 export default AnswerPageCover;
 
 const StyledAnswerPageCoverContainer = styled.section`
-  padding-top: 100px;
-  height: 100vh;
+  padding-top: 20%;
+  height: 100%;
 
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(360deg, #f0f4f8 0%, #eaf1ff 34.9%, #a7bfe8 93.75%);
-
+  background: ${({ theme }) => theme.background};
   .cover__title {
     width: 200px;
+    font-weight: 700;
     font-size: 24px;
     line-height: 36px;
     text-align: center;
-    color: #0f122e;
+    color: ${({ theme }) => theme.color.gray100};
     margin: 0;
   }
 
   .cover__description {
-    color: rgba(77, 80, 105, 1);
+    color: ${({ theme }) => theme.color.gray200};
     font-weight: 600;
     font-size: 16px;
+    line-height: 24px;
     margin: 8px 0 0 0;
   }
 
@@ -67,20 +68,23 @@ const StyledAnswerPageCoverContainer = styled.section`
 
   .cover__button {
     position: absolute;
-    bottom: 40px;
+    bottom: 20px;
     width: 90%;
-    background-color: rgba(131, 163, 216, 1);
+    background-color: ${({ theme }) => theme.color.primary100};
 
     height: 48px;
     gap: 8px;
     padding: 8px;
     border-radius: 24px;
     border: none;
-    color: rgba(255, 255, 255, 1);
+    color: ${({ theme }) => theme.color.white};
     cursor: pointer;
+
+    font-weight: 700;
   }
 
   .cover__button:hover {
-    background-color: rgba(101, 132, 183, 1);
+    ${({ theme }) => theme.hover.primary100};
+    /* background-color: rgba(194, 214, 250, 1); */
   }
 `;
