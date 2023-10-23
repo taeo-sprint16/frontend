@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface ButtonProps {
   $color: string;
   $textColor: string;
   $disabled: boolean;
+  $hover?: boolean;
 }
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
   color: string;
   disabled?: boolean;
   textColor?: string;
+  hover?: boolean;
   onClick?: () => void;
 }
 
@@ -20,6 +22,7 @@ const Button = ({
   color,
   disabled = false,
   textColor = 'white',
+  hover,
   onClick,
 }: Props) => {
   return (
@@ -27,6 +30,7 @@ const Button = ({
       $color={color}
       $textColor={textColor}
       $disabled={disabled}
+      $hover={hover}
       onClick={onClick}
       disabled={disabled}
     >
@@ -43,15 +47,29 @@ const StyleButton = styled.button<ButtonProps>`
   width: 100%;
   height: 48px;
 
-  color: ${({ theme, $textColor }) => theme.color[$textColor]};
+  font-weight: 700;
   white-space: nowrap;
 
   border: none;
   border-radius: 24px;
 
-  background-color: ${({ theme, $disabled, $color }) =>
-    $disabled ? theme.color.secondary100 : theme.color[$color]};
+  ${({ theme, $disabled, $color, $textColor }) =>
+    $disabled
+      ? css`
+          background-color: ${theme.color.secondary100};
+          color: ${theme.color.primary100};
+        `
+      : css`
+          background-color: ${theme.color[$color]};
+          color: ${theme.color[$textColor]};
+        `}
 
-  color: ${({ theme, $disabled, $textColor }) =>
-    $disabled ? theme.color.primary100 : theme.color[$textColor]};
+  &:hover {
+    ${({ theme, $hover, $disabled, $color }) =>
+      $hover &&
+      !$disabled &&
+      css`
+        ${theme.hover[$color]}
+      `}
+  }
 `;

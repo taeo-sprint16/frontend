@@ -7,7 +7,7 @@ import LoadingDots from '../components/Loading/LoadingDots';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 import Modal from '../components/Modal/Modal';
 import CustomSuspense from '../components/Suspense/CustomSuspense';
-import useClipboard from '../hooks/useClipboard';
+import { clipboardText } from '../utils/clipboardWrite';
 import { getCreatedYMD } from '../utils/getCreatedYMD';
 // import { useParams } from 'react-router-dom';
 
@@ -33,7 +33,6 @@ const QuestionConfirmPage = () => {
   const [myAnsersResponse, setMyAnswersResponse] = useState<ResponseData>();
   const router = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const { handleShareCodeCopy } = useClipboard();
 
   useEffect(() => {
     fetchMyAnswers()
@@ -134,7 +133,7 @@ const QuestionConfirmPage = () => {
           </button>
           <button
             onClick={() => {
-              handleShareCodeCopy('7716N2EK');
+              clipboardText('7716N2EK');
               popCopyMessage();
             }}
             className="question__shareButton"
