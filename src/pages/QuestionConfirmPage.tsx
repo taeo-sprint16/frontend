@@ -140,7 +140,11 @@ const QuestionConfirmPage = () => {
           </button>
           <button
             onClick={() => {
-              clipboardText(myAnsersResponse?.data?.shareCode ?? '7716N2EK');
+              clipboardText(
+                `https://aboutme-ko.vercel.app/answer/${
+                  myAnsersResponse?.data?.shareCode ?? '7716N2EK'
+                }`,
+              );
               popCopyMessage();
             }}
             className="question__shareButton"

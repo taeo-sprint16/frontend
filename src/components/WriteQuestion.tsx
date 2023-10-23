@@ -147,14 +147,14 @@ const WriteQuestion = () => {
 };
 
 const StyledQuestionContainer = styled.form`
-  margin-top: 60px;
-  width: 375px;
-  height: 812px;
+  /* margin-top: 60px; */
+  width: 100%;
+  height: 100%;
   background: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
+  /* align-items: center; */
+  /* margin: 0 auto; */
   padding: 0 24px;
 `;
 
@@ -163,7 +163,7 @@ const WriteIcon = styled.div`
   height: 2rem;
   margin-top: 3.3rem;
   margin-bottom: 1.25rem;
-  margin-left: 1.5rem;
+  /* margin-left: 1.5rem; */
   gap: 1.25rem;
   img {
     width: 2rem;
@@ -173,10 +173,10 @@ const WriteIcon = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  width: 20.4rem;
+  width: 100%;
   flex-direction: column;
-  align-items: center;
-  gap: 2.5rem;
+  /* align-items: center; */
+  /* gap: 20px; */
 `;
 
 const Title = styled.div`
@@ -195,8 +195,9 @@ const Title = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  margin: 20px 0 32px;
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   gap: 8px;
   width: 100%;
 `;
@@ -213,6 +214,9 @@ const Button = styled.button<{ $active: boolean }>`
   border-radius: 1rem;
   background: ${(props) => (props.$active ? '#7aa3e9' : '#f4f5f9')};
   cursor: pointer;
+
+  white-space: nowrap;
+
   &:focus {
     background: #7aa3e9;
     color: #f4f5f9;
@@ -248,7 +252,7 @@ const PlaceHolder = styled.textarea`
     normal 500 1rem / normal 'Pretendard',
     sans-serif;
   border: none;
-  margin-bottom: 23rem;
+  /* margin-bottom: 23rem; */
   &::placeholder {
     padding-right: 1rem;
   }
@@ -257,7 +261,7 @@ const PlaceHolder = styled.textarea`
   min-height: 6.25rem;
   overflow: hidden;
   outline: none;
-  padding: 0 24px;
+  padding: 0;
 `;
 
 const DoneContainer = styled.div`
