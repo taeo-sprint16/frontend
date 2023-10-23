@@ -14,9 +14,6 @@ interface PlaceHolderProps {
 
 const WriteQuestion = () => {
   const [question, setQuestion] = useState('');
-  const [count, setCount] = useState(0);
-  const [doneClicked, setDoneClicked] = useState(false);
-
   const [activeButton, setActiveButton] = useState('');
 
   const navigate = useNavigate();
@@ -28,11 +25,6 @@ const WriteQuestion = () => {
   const handleQuestion = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputText = event.target.value;
     setQuestion(inputText);
-    setCount(inputText.length);
-  };
-
-  const handleDoneClick = () => {
-    setDoneClicked(true);
   };
 
   const updatePlaceHodler = (word: string) => {
@@ -41,18 +33,18 @@ const WriteQuestion = () => {
       단점: '내 단점에 대한 질문을 적어보세요.',
       첫인상: '제 첫인상은 어떤가요?',
       성격: '제 성격은 어떤가요?',
+      의사소통: ' 의사소통 방식이 어떤지 알려주세요.',
     };
 
-    const placeholderText = placeholderItem[word] || '질문';
-    setQuestion('');
-    if (ref.current) ref.current.placeholder = placeholderText;
+    return placeholderItem[word] || '질문을 입력하세요.';
   };
 
   const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const selectedKeyword = (event.currentTarget.textContent || '') as KeyWord;
     if (activeButton === selectedKeyword) return;
-    updatePlaceHodler(selectedKeyword);
+
+    setQuestion(updatePlaceHodler(selectedKeyword));
     setActiveButton(selectedKeyword);
   };
 
@@ -83,10 +75,10 @@ const WriteQuestion = () => {
 
   return (
     <StyledQuestionContainer>
-      <WriteIcon>
-        <img src="/write-question.svg" alt="write-question" />
-      </WriteIcon>
       <Wrapper>
+        <WriteIcon>
+          <img src="/write-question.svg" alt="write-question" />
+        </WriteIcon>
         <Title>
           <span>나에 대해 알고 싶은 질문을 적어보세요.</span>
           <span>
@@ -127,27 +119,17 @@ const WriteQuestion = () => {
           onChange={handleQuestion}
         />
       </Wrapper>
-      {doneClicked ? (
-        <CompleteButton
-          onClick={handleCompleteQuestion}
-          disabled={question === '' ? true : false}
-        >
-          질문 작성 완료
-        </CompleteButton>
-      ) : (
-        <DoneContainer>
-          <span>{count} / 50</span>
-          <button type="button" onClick={handleDoneClick}>
-            완료
-          </button>
-        </DoneContainer>
-      )}
+      <CompleteButton
+        onClick={handleCompleteQuestion}
+        disabled={question === '' ? true : false}
+      >
+        질문 작성 완료
+      </CompleteButton>
     </StyledQuestionContainer>
   );
 };
 
 const StyledQuestionContainer = styled.form`
-  /* margin-top: 60px; */
   width: 100%;
   height: 100%;
   background: #fff;
@@ -163,7 +145,6 @@ const WriteIcon = styled.div`
   height: 2rem;
   margin-top: 3.3rem;
   margin-bottom: 1.25rem;
-  /* margin-left: 1.5rem; */
   gap: 1.25rem;
   img {
     width: 2rem;
@@ -184,20 +165,24 @@ const Title = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
+  span {
+    gap: 12px;
+  }
   span:nth-child(1) {
     font-weight: bold;
+    margin-bottom: 0.75rem;
   }
   span:nth-child(2) {
     color: #939394;
     line-height: 1.25rem;
     font-weight: 500;
+    margin-bottom: 1.25rem;
   }
 `;
 
 const ButtonContainer = styled.div`
   margin: 20px 0 32px;
   display: flex;
-  /* justify-content: flex-end; */
   gap: 8px;
   width: 100%;
 `;
@@ -205,7 +190,6 @@ const ButtonContainer = styled.div`
 const Button = styled.button<{ $active: boolean }>`
   display: flex;
   height: 1.75rem;
-  padding: 0.5rem 0.5rem;
   justify-content: space-between;
   align-items: center;
   border: none;
@@ -248,37 +232,15 @@ const CompleteButton = styled.button`
 
 const PlaceHolder = styled.textarea`
   text-align: left;
-  font:
-    normal 500 1rem / normal 'Pretendard',
-    sans-serif;
+  font: normal 500 1rem / normal 'Pretendard';
   border: none;
-  /* margin-bottom: 23rem; */
   &::placeholder {
     padding-right: 1rem;
   }
-  resize: none;
-  width: 100%;
-  min-height: 6.25rem;
+  display: flex;
+  justify-content: flex-start;
   overflow: hidden;
   outline: none;
-  padding: 0;
-`;
-
-const DoneContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  span,
-  button {
-    font-weight: bold;
-  }
-  button {
-    border: none;
-    outline: none;
-    background: transparent;
-    cursor: pointer;
-  }
 `;
 
 export default WriteQuestion;

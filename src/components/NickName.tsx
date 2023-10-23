@@ -18,10 +18,10 @@ const NickName = () => {
 
   return (
     <StyledQuestionContainer>
-      <UserIcon>
-        <img src="/user.svg" alt="user" />
-      </UserIcon>
       <Wrapper>
+        <UserIcon>
+          <img src="/user.svg" alt="user" />
+        </UserIcon>
         <Title>
           <span>질문자님의 닉네임을 입력해주세요.</span>
           <span> 적어주신 닉네임은 답변자에게 공유됩니다.</span>
@@ -56,7 +56,6 @@ const UserIcon = styled.div`
   height: 2rem;
   margin-top: 3.3rem;
   margin-bottom: 1.25rem;
-  /* margin-left: 1.5rem; */
   gap: 1.25rem;
   img {
     width: 2rem;
@@ -66,9 +65,9 @@ const UserIcon = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
+  width: 480px;
   flex-direction: column;
   align-items: flex-start;
-  /* gap: 1.25rem; */
 `;
 
 const Title = styled.div`
@@ -76,18 +75,20 @@ const Title = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+
   span:nth-child(1),
   span:nth-child(2) {
     font-weight: bold;
   }
   span:nth-child(1) {
     font-size: 1.25rem;
+    margin-bottom: 0.75rem;
   }
   span:nth-child(2) {
     color: #939394;
     font: normal 500 0.875rem / normal 'Pretendard';
     line-height: 1.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
 `;
 
@@ -105,10 +106,6 @@ const PlaceHolder = styled.input`
     padding-right: 1rem;
     color: ${({ theme }) => theme.color.gray400};
   }
-
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
   overflow: hidden;
   outline: none;
 `;
@@ -122,7 +119,7 @@ const CompleteButton = styled.button`
   left: 50%;
   transform: translateX(-50%);
   height: 3rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0 24px;
   justify-content: center;
   align-items: center;
   border-radius: 1.5rem;
