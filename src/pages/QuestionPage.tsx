@@ -1,11 +1,7 @@
 import NickName from '../components/NickName';
 
 const QuestionPage = () => {
-  return (
-    <>
-      <NickName />
-    </>
-  );
+  return <NickName />;
 };
 
 export default QuestionPage;
