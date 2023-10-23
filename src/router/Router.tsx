@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import WriteQuestion from '../components/WriteQuestion';
 import Layout from '../layout/Layout';
 import AnswerPage from '../pages/AnswerPage';
 import ConfirmPage from '../pages/ConfirmPage';
@@ -18,6 +19,7 @@ const Paths = () => {
         <Route path="/answer/:shareCode" element={<AnswerPage />} />
         <Route path="/confirm" element={<ConfirmPage />} />
         <Route path="/question/:confirmCode" element={<QuestionConfirmPage />} />
+        <Route path="/write-question" element={<WriteQuestion />} />
         <Route path="*" element={<MainPage />} />
       </Route>
     </Routes>
