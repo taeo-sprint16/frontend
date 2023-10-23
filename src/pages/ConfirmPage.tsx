@@ -76,8 +76,8 @@ export default ConfirmPage;
 const StyledContainer = styled.div`
   position: relative;
 
-  padding-top: 141px;
-  height: 100vh;
+  padding-top: 20%;
+  height: 100%;
   width: 100%;
 
   border: 1px solid lightgray;
@@ -93,7 +93,7 @@ const StyledBottomBox = styled.div`
   width: 100%;
   padding: 0 24px;
 
-  bottom: 62px;
+  bottom: 20px;
 
   display: flex;
   flex-direction: column;

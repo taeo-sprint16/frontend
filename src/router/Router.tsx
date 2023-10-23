@@ -18,6 +18,7 @@ const Paths = () => {
         <Route path="/answer/:shareCode" element={<AnswerPage />} />
         <Route path="/confirm" element={<ConfirmPage />} />
         <Route path="/question/:confirmCode" element={<QuestionConfirmPage />} />
+        <Route path="*" element={<MainPage />} />
       </Route>
     </Routes>
   );

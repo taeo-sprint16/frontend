@@ -6,12 +6,12 @@ import theme from './styles/theme';
 
 function App() {
   return (
-    <main>
+    <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Router />
       </ThemeProvider>
-    </main>
+    </>
   );
 }
 
