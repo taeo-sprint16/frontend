@@ -21,6 +21,7 @@ const theme = {
   color,
   hover,
   maxWidth: '480px',
+  minWidth: '320px',
   background: 'linear-gradient(0deg, #f0f4f8 0%, #eaf1ff 34.9%, #a7bfe8 93.75%)',
 };
 
