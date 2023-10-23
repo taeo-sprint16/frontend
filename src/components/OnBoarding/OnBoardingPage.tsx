@@ -14,13 +14,13 @@ const OnboardingPage = () => {
 
 export default OnboardingPage;
 const StyeldContainer = styled.section`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  min-width: 375px;
-  height: 100vh;
-  padding-top: 178px;
+  height: 100%;
   background: ${({ theme }) => theme.background};
   text-align: center;
   font-family: 'Pretendard', sans-serif;

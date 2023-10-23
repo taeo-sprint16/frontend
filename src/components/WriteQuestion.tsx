@@ -130,13 +130,13 @@ const WriteQuestion = () => {
 };
 
 const StyledQuestionContainer = styled.form`
-  width: 20.4rem;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
+  /* align-items: center; */
+  /* margin: 0 auto; */
   padding: 0 24px;
 `;
 
@@ -144,7 +144,7 @@ const WriteIcon = styled.div`
   width: 20rem;
   height: 2rem;
   margin-top: 3.3rem;
-  margin-left: 2.5rem;
+  margin-bottom: 1.25rem;
   gap: 1.25rem;
   img {
     width: 2rem;
@@ -154,11 +154,10 @@ const WriteIcon = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  width: 480px;
+  width: 100%;
   flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 0 24px;
+  /* align-items: center; */
+  /* gap: 20px; */
 `;
 
 const Title = styled.div`
@@ -182,8 +181,8 @@ const Title = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  margin: 20px 0 32px;
   display: flex;
-  justify-content: center;
   gap: 8px;
   width: 100%;
 `;
@@ -199,6 +198,9 @@ const Button = styled.button<{ $active: boolean }>`
   border-radius: 1rem;
   background: ${(props) => (props.$active ? '#7aa3e9' : '#f4f5f9')};
   cursor: pointer;
+
+  white-space: nowrap;
+
   &:focus {
     background: #7aa3e9;
     color: #f4f5f9;
@@ -232,7 +234,6 @@ const PlaceHolder = styled.textarea`
   text-align: left;
   font: normal 500 1rem / normal 'Pretendard';
   border: none;
-  margin-bottom: 28rem;
   &::placeholder {
     padding-right: 1rem;
   }

@@ -18,8 +18,8 @@ const useKakaoShare = () => {
           '답변은 확인코드를 입력해야 확인할 수 있어요. 답변을 확인하러 가보세요!',
         imageUrl: '',
         link: {
-          mobileWebUrl: ROOT_URL,
-          webUrl: ROOT_URL,
+          mobileWebUrl: 'https://aboutme-ko.vercel.app',
+          webUrl: 'https://aboutme-ko.vercel.app',
         },
       },
       buttons: [
