@@ -33,18 +33,18 @@ const WriteQuestion = () => {
       단점: '내 단점에 대한 질문을 적어보세요.',
       첫인상: '제 첫인상은 어떤가요?',
       성격: '제 성격은 어떤가요?',
+      의사소통: ' 의사소통 방식이 어떤지 알려주세요.',
     };
 
-    const placeholderText = placeholderItem[word] || '질문';
-    setQuestion('');
-    if (ref.current) ref.current.placeholder = placeholderText;
+    return placeholderItem[word] || '질문을 입력하세요.';
   };
 
   const handleSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const selectedKeyword = (event.currentTarget.textContent || '') as KeyWord;
     if (activeButton === selectedKeyword) return;
-    updatePlaceHodler(selectedKeyword);
+
+    setQuestion(updatePlaceHodler(selectedKeyword));
     setActiveButton(selectedKeyword);
   };
 
