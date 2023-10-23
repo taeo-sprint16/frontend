@@ -8,6 +8,10 @@ import TosatMessage from '../components/Toast/TosatMessage';
 import useKakaoShare from '../hooks/useKakaoShare';
 import { clipboardText } from '../utils/clipboardWrite';
 
+const ROOT_URL = import.meta.env.PROD
+  ? 'https://aboutme-ko.vercel.app'
+  : 'http://localhost:5173';
+
 const QuestionSharePage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -28,9 +32,9 @@ const QuestionSharePage = () => {
 
   const handleShareCode = (type: 'link' | 'kakao') => {
     if (type === 'link') {
-      clipboardText(String(shareCode));
+      clipboardText(`${ROOT_URL}/answer/${shareCode || 'sharecode'}`);
     } else if (type === 'kakao') {
-      confirmMessage(String(confirmCode));
+      confirmMessage(confirmCode);
     }
     setType(type);
     handleShowMessage(true);
