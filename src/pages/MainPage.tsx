@@ -38,6 +38,16 @@ const MainPage = () => {
     setMouseUpClientY(e.clientY);
   };
 
+  const onTouchStart = (e: React.TouchEvent<HTMLElement>) => {
+    setMouseDownClientX(e.touches[0].clientX);
+    setMouseDownClientY(e.touches[0].clientY);
+  };
+
+  const onTouchEnd = (e: React.TouchEvent<HTMLElement>) => {
+    setMouseUpClientX(e.changedTouches[0].clientX);
+    setMouseUpClientY(e.changedTouches[0].clientY);
+  };
+
   const [slideWidth, setSlideWidht] = useState(window.innerWidth);
 
   const handleResize = () => {
@@ -83,6 +93,8 @@ const MainPage = () => {
         <SliderUl
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
           current={currentSlide}
           slidewidth={slideWidth}
         >
